@@ -43,7 +43,7 @@
     self.textField.autocorrectionType = UITextAutocorrectionTypeYes;
     self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.clearButtonMode = UITextFieldViewModeNever;
-
+   
 }
 
 - (void)configureTintedTextField {

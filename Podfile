@@ -1,6 +1,6 @@
 source 'https://github.com/growingio/giospec.git'
-#source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/aliyun/aliyun-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
@@ -16,6 +16,7 @@ target 'Example' do
   pod 'MJRefresh'
   pod 'MBProgressHUD'
   pod 'AlicloudPush', '~> 1.9.8'
+  pod 'LookinServer', :configurations => ['Debug']
 end
 
 target 'ExampleTests' do

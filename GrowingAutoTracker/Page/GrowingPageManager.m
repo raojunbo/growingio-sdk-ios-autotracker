@@ -34,10 +34,10 @@
 
 @GrowingBroadcasterRegister(GrowingApplicationMessage, GrowingPageManager) @interface GrowingPageManager()
 
-@property (nonatomic, strong) NSHashTable *visiableControllersTable;
+@property (nonatomic, strong) NSHashTable *visiableControllersTable; //可见的vc
 @property (nonatomic, strong) NSPointerArray *visiableControllersArray;
 
-@property (nonatomic, strong) NSMutableArray<NSString *> *ignoredPrivateControllers;
+@property (nonatomic, strong) NSMutableArray<NSString *> *ignoredPrivateControllers;//系统私有的vc，我不需要关心的
 
 @end
 
@@ -54,6 +54,7 @@
 }
 
 - (void)createdViewControllerPage:(UIViewController *)viewController {
+    //当vc 可见的时候，给vc绑定一个抽象的page对象
     GrowingPageGroup *page = [viewController growingPageHelper_getPageObject];
     if (page == nil) {
         page = [GrowingPageGroup pageWithCarrier:viewController];
@@ -207,11 +208,11 @@
 }
 
 - (UIViewController *)currentViewController {
-    return [self growingHook_updateVisiableVC].lastObject;
+    return [self growingHook_updateVisiableVC].lastObject;//可见vc的最上面的元素
 }
 
 - (UIViewController *)rootViewController {
-    UIViewController *vc = [self growingHook_updateVisiableVC].lastObject;
+    UIViewController *vc = [self growingHook_updateVisiableVC].lastObject;//可见vc的最后一个响应者链里vc类
     while (vc.parentViewController) {
         vc = vc.parentViewController;
     }
@@ -222,7 +223,7 @@
     return [self growingHook_updateVisiableVC];
 }
 
-- (NSArray<UIViewController *> *)growingHook_updateVisiableVC {
+- (NSArray<UIViewController *> *)growingHook_updateVisiableVC {//根据最上面的可见vc去找
     UIViewController *curVC = self.visiableControllersArray.allObjects.lastObject;
     NSMutableArray<UIViewController *> *arr = [[NSMutableArray alloc] init];
     UIView *curView = curVC.view;

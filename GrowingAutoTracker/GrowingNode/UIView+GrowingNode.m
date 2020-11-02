@@ -129,6 +129,8 @@ GrowingPropertyDefine(UIView, GrowingMaskView*, growingHighlightView, setGrowing
     }
 }
 
+//对于一个view，如果他的下一个响应者是vc。那么他的super节点是vc;
+//             如果他的下一个响应者不是vc,那么他的super是superview；
 - (id<GrowingNode>)growingNodeParent {
     if ([self.nextResponder isKindOfClass:[UIViewController class]]) {
         return (id)self.nextResponder;

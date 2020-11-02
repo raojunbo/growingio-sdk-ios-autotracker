@@ -15,18 +15,16 @@
 //使用md5加密
 #import <CommonCrypto/CommonDigest.h>
 #import <GrowingAutoTracker.h>
-
-static NSString *const kGrowingProjectId = @"0a1b4118dd954ec3bcc69da5138bdb96";
+#import "Example-Swift.h" // 编译器将Swift的代码转换成Object-c的代码
+static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
-
+@property (nonatomic, strong) ClientCircleWindow *circleWindow;
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    [Bugly startWithAppId:@"93004a21ca"];
-
     // Config GrowingIO
     self.configuation = [[GrowingConfiguration alloc] initWithProjectId:kGrowingProjectId launchOptions:launchOptions];
     [self.configuation setLogEnabled:YES];
@@ -40,7 +38,11 @@ static NSString *const kGrowingProjectId = @"0a1b4118dd954ec3bcc69da5138bdb96";
     NSLog(@"GIO SDK当前版本号：%@;\n 当前手机系统的版本号：%@", trackSdkVersion, systemVersion);
 
     [self registerRemoteNotification];
-
+    
+    CGRect screenRect = UIScreen.mainScreen.bounds;
+    self.circleWindow = [[ClientCircleWindow alloc]initWithFrame:screenRect];
+    [self.circleWindow makeKeyAndVisible];
+    
     return YES;
 }
 

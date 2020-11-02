@@ -348,7 +348,7 @@ static GrowingWebCircle *shareInstance = nil;
 }
 
 - (void)fillAllViewsForWebCircle:(NSDictionary *)dataDict completion:(void (^)(NSMutableDictionary *dict))completion {
-    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    //几点管理器创建
     GrowingNodeManager *manager = [[GrowingNodeManager alloc]
         initWithNodeAndParent:[GrowingPageManager sharedInstance].rootViewController
                    checkBlock:^BOOL(id<GrowingNode> node) {
@@ -360,13 +360,19 @@ static GrowingWebCircle *shareInstance = nil;
                    }];
 
     NSMutableDictionary *modifiedPageData = [[NSMutableDictionary alloc] init];
+    //页面管理器的currentVC就是最后的vc
     modifiedPageData[@"page"] = [[[GrowingPageManager sharedInstance] currentViewController] growingPageName] ?: @"";
     modifiedPageData[@"domain"] = [GrowingDeviceInfo currentDeviceInfo].bundleID;
 
     NSMutableDictionary *finalDataDict = [NSMutableDictionary dictionaryWithDictionary:dataDict];
     [self.gWebViewArray removeAllObjects];
     self.gWebViewArray = nil;
+    
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
     NSMutableArray *pages = [[NSMutableArray alloc] init];
+    
+    //节点管理器去遍历所有子节点
+    //可以用此节点管理器遍历所有节点。找出我需要的节点。
     [manager enumerateChildrenUsingBlock:^(id<GrowingNode> aNode, GrowingNodeManagerEnumerateContext *context) {
         //支持WKWebview
         if ([aNode isKindOfClass:[WKWebView class]]) {
@@ -395,19 +401,21 @@ static GrowingWebCircle *shareInstance = nil;
                 [context skipThisChilds];
                 return;
             }
-
+            //示例vc 如何获取vc相关的信息
             if ([aNode isKindOfClass:[UIViewController class]]) {
                 UIViewController *current = (UIViewController *)aNode;
+                //获取这个page
                 GrowingPageGroup *page = [current growingPageHelper_getPageObject];
                 if (!page) {
                     [[GrowingPageManager sharedInstance] createdViewControllerPage:current];
                     page = [current growingPageHelper_getPageObject];
                 }
                 NSMutableDictionary *dict = [self dictFromPage:aNode xPath:page.path];
-                if (dict.count > 0) {
+                if (dict.count > 0) {//page什么时候建立的这个path关系
                     [pages addObject:dict];
                 }
             } else {
+                //示例view 如何获取view的信息（页面信息，uiview的keyPath）
                 NSMutableDictionary *dict = [self dictFromNode:aNode
                                                       pageData:modifiedPageData
                                                       keyIndex:aNode.growingNodeKeyIndex
@@ -420,8 +428,9 @@ static GrowingWebCircle *shareInstance = nil;
             }
         }
     }];
-    finalDataDict[@"elements"] = elements;
-    finalDataDict[@"pages"] = pages;
+    finalDataDict[@"elements"] = elements;//所有的元素信息
+    finalDataDict[@"pages"] = pages;//所有的页面信息
+    NSLog(@"生成的界面快照:%@",[finalDataDict growingHelper_jsonString]);
     if (completion != nil) {
         completion(finalDataDict);
     }
@@ -464,7 +473,7 @@ static GrowingWebCircle *shareInstance = nil;
 - (void)sendScreenShot {
     [self sendScreenShotWithCallback:nil];
 }
-
+//异步检索所有元素
 + (void)retrieveAllElementsAsync:(void (^)(NSString *))callback {
     [[self shareInstance] sendScreenShotWithCallback:callback];
 }
@@ -542,10 +551,17 @@ static GrowingWebCircle *shareInstance = nil;
 - (void)remoteReady {
     [self sendScreenShot];
 }
-
+//整个web的圈选入口.实际上只是建立
 - (void)runWithCircleRoomNumber:(NSString *)circleRoomNumber
                      readyBlock:(void (^)(void))readyBlock
                     finishBlock:(void (^)(void))finishBlock {
+    //test
+    [self.class retrieveAllElementsAsync:^(NSString *result) {
+        NSLog(@"这是获取所有Element的字符:%@",result);
+    }];
+    return;
+    //end test
+    //下面是与web端进行连接的过程
     if (!self.isReady) {
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 

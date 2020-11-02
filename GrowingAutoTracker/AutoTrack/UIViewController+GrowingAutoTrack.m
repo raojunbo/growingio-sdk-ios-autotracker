@@ -33,6 +33,7 @@ GrowingPropertyDefine(UIViewController, NSNumber*, growingHook_hasDidAppear, set
 
 @implementation UIViewController (GrowingAutoTrack)
 
+//hook vc的DidAppear
 - (void)growing_viewDidAppear:(BOOL)animated {
     [self handleViewDidAppear];
     
@@ -41,10 +42,12 @@ GrowingPropertyDefine(UIViewController, NSNumber*, growingHook_hasDidAppear, set
 
 - (void)handleViewDidAppear {
 
+    //当前vc是否被忽略
     if ([[GrowingPageManager sharedInstance] isViewControllerIgnored:self]) {
         return;
     }
     
+    //创建vcpage。并且打点
     [[GrowingPageManager sharedInstance] createdViewControllerPage:self];
 
     [self setGrowingHook_hasDidAppear:@YES];

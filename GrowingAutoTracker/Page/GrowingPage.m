@@ -99,7 +99,7 @@
 
     NSMutableArray<GrowingPage *> *pageTree = [NSMutableArray array];
     [pageTree addObject:self];
-    GrowingPageGroup *pageParent = self.parent;
+    GrowingPageGroup *pageParent = self.parent;//当前节点的父节点
     while (pageParent != nil) {
         [pageTree addObject:pageParent];
         if (![NSString growingHelper_isBlankString:pageParent.alias]) {
@@ -107,6 +107,8 @@
         }
         pageParent = pageParent.parent;
     }
+    
+    
     NSString *path = [NSString string];
     for (NSInteger i = 0; i < pageTree.count; ++i) {
         if (i >= 3) {

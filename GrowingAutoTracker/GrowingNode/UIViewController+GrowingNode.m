@@ -183,6 +183,7 @@
     return nil;
 }
 
+//viewController取子节点
 - (NSArray<id<GrowingNode>>*)growingNodeChilds {
     NSMutableArray *childs = [NSMutableArray array];
 

@@ -54,7 +54,7 @@
 @interface GrowingNodeManager ()
 
 @property (nonatomic, retain) id<GrowingNode> enumItem;
-@property (nonatomic, retain) NSMutableArray<GrowingNodeManagerDataItem *> *allItems;
+@property (nonatomic, retain) NSMutableArray<GrowingNodeManagerDataItem *> *allItems;//本节点及说有的父节点
 @property (nonatomic, retain) NSMutableArray<id<GrowingNode>> *allNodes;
 
 @property (nonatomic, copy) BOOL (^checkBlock)(id<GrowingNode> node);
@@ -70,12 +70,14 @@
     return nil;
 }
 
+//初始化节点和其父节点
 - (instancetype)initWithNodeAndParent:(id<GrowingNode>)aNode checkBlock:(BOOL (^)(id<GrowingNode>))checkBlock {
     self = [super init];
     if (self) {
         self.allItems = [[NSMutableArray alloc] initWithCapacity:7];
         self.checkBlock = checkBlock;
 
+        //如果当前节点不为nil,将其放入节点的最前面
         id<GrowingNode> curNode = aNode;
         while (curNode) {
             [self addNodeAtFront:curNode];
@@ -85,7 +87,7 @@
         if (!self.allItems.count) {
             return nil;
         }
-
+        
         for (GrowingNodeManagerDataItem *item in self.allItems) {
             if (checkBlock && !checkBlock(item.node)) {
                 return nil;
@@ -99,8 +101,8 @@
     if (!block || self.allItems.count == 0) {
         return;
     }
+    //取出当前节点工具的最后一个节点。也就是本节点
     self.enumItem = self.allItems.lastObject.node;
-
     [self _enumerateChildrenUsingBlock:block];
     self.enumItem = nil;
 }
@@ -108,21 +110,22 @@
 - (GrowingNodeManagerEnumerateContext *)_enumerateChildrenUsingBlock:
     (void (^)(id<GrowingNode>, GrowingNodeManagerEnumerateContext *))block {
     NSUInteger endIndex = self.allItems.count - 1;
-    GrowingNodeManagerDataItem *endItem = self.allItems[endIndex];
+    GrowingNodeManagerDataItem *endItem = self.allItems[endIndex];//取出最后一个节点
 
     GrowingNodeManagerEnumerateContext *context = [[GrowingNodeManagerEnumerateContext alloc] init];
-    context.manager = self;
-    block(endItem.node, context);
+    context.manager = self;         //上下文的manager是context
+    block(endItem.node, context);   //执行外部的block
 
-    if (context.stopAll || context.stopChilds) {
+    if (context.stopAll || context.stopChilds) { //外部可能通过这个context去操纵
         return context;
     }
-
+    
+    //endItem基本是自己。遍历查看自己的子节点
     NSArray *childs = [endItem.node growingNodeChilds];
     for (int i = 0; i < childs.count; i++) {
         id<GrowingNode> node = childs[i];
         if (!self.checkBlock || self.checkBlock(node)) {
-            [self addNodeAtEnd:node];
+            [self addNodeAtEnd:node];//将当前节点的一个子节点加入allitems最后
             GrowingNodeManagerEnumerateContext *childContext = [self _enumerateChildrenUsingBlock:block];
             [self removeNodeItemAtEnd];
 
@@ -138,24 +141,25 @@
 
 #pragma mark - 添加删除
 
-// 添加
+// 在前面添加
 - (void)addNodeAtFront:(id<GrowingNode>)aNode {
     GrowingNodeManagerDataItem *item = [[GrowingNodeManagerDataItem alloc] init];
     item.node = aNode;
     [self.allItems insertObject:item atIndex:0];
 }
 
+// 在后面添加
 - (void)addNodeAtEnd:(id<GrowingNode>)aNode {
     GrowingNodeManagerDataItem *dataItem = [[GrowingNodeManagerDataItem alloc] init];
     dataItem.node = aNode;
     [self.allItems addObject:dataItem];
 }
 
-
-// 移除
+// 移除最后一个节点
 - (void)removeNodeItemAtEnd {
     [self.allItems removeLastObject];
 }
+
 
 - (NSUInteger)nodeCount {
     return self.allItems.count;

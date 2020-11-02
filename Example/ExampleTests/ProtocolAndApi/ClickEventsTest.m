@@ -7,10 +7,10 @@
 //
 
 #import "ClickEventsTest.h"
-
 #import "GrowingTracker.h"
 #import "MockEventQueue.h"
 #import "NoburPoMeaProCheck.h"
+#import "KIF.h"
 @implementation ClickEventsTest
 
 - (void)beforeEach {

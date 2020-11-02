@@ -71,6 +71,7 @@ static NSString* const kGrowingVersion = @"3.0.0";
     }
     
     // Notify GrowingInstance Did Start.
+    //实际上就是auto追踪
     [self notifyTrackerConfigurationDidChange:configuration];
     
     //  默认启动sdk crash 收集
@@ -199,6 +200,7 @@ static NSString* const kGrowingVersion = @"3.0.0";
 }
 
 + (void)notifyTrackerConfigurationDidChange:(GrowingConfiguration *)configuration {
+    //
     [[GrowingBroadcaster sharedInstance] notifyEvent:@protocol(GrowingTrackerConfigurationMessage)
                                           usingBlock:^(id<GrowingMessageProtocol>  _Nonnull obj) {
         if ([obj respondsToSelector:@selector(growingTrackerConfigurationDidChanged:)]) {

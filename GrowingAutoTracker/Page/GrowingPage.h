@@ -18,7 +18,7 @@
 #import <UIKit/UIKit.h>
 
 @class GrowingPageGroup;
-
+//我的理解应该是一个vc的承载对象；
 @interface GrowingPage : NSObject
 
 @property(readonly, weak, nonatomic) UIViewController *carrier;
