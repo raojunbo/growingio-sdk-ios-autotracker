@@ -19,7 +19,7 @@
 static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
-@property (nonatomic, strong) ClientCircleWindow *circleWindow;
+@property (nonatomic, strong) CircleWindow *circleWindow;
 @end
 
 @implementation AppDelegate
@@ -40,7 +40,7 @@ static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
     [self registerRemoteNotification];
     
     CGRect screenRect = UIScreen.mainScreen.bounds;
-    self.circleWindow = [[ClientCircleWindow alloc]initWithFrame:screenRect];
+    self.circleWindow = [[CircleWindow alloc]initWithFrame:screenRect];
     [self.circleWindow makeKeyAndVisible];
     
     return YES;

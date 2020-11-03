@@ -25,3 +25,7 @@
 #import "GrowingPageGroup.h"
 #import "NSString+GrowingHelper.h"
 
+#import "UIView+CircleHitTest.h"
+#import "GrowingNodeHelper.h"
+#import "GrowingHelpers.h"
+

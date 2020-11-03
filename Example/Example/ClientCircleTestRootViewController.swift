@@ -7,26 +7,14 @@
 
 import UIKit
 
-class ClientFigureView: UIView {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.layer.cornerRadius = frame.width/2.0
-        self.layer.masksToBounds = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class ClientCircleRootViewController: UIViewController {
-    lazy var figureView:ClientFigureView = {
+class ClientCircleTestRootViewController: UIViewController {
+    lazy var figureView:CircleSelectView = {
         let rect = UIScreen.main.bounds
-        let view = ClientFigureView(frame: CGRect(x: rect.width/2.0, y: rect.height/2.0, width: 60, height: 60))
-        view.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 1)
+        let view = CircleSelectView(frame: CGRect(x: rect.width/2.0, y: rect.height/2.0, width: 60, height: 60))
+        view.backgroundColor = UIColor(red: 220, green: 50, blue: 35, alpha: 1)
         return view
     }()
+    
     
     lazy var panGer:UIPanGestureRecognizer = {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panGerClick))
@@ -43,30 +31,39 @@ class ClientCircleRootViewController: UIViewController {
         self.view.addGestureRecognizer(panGer)
     }
     
-    @objc func panGerClick(ger:UIPanGestureRecognizer) {
-        let translatePoint = ger.translation(in: self.view)
+    @objc func panGerClick(gesture:UIPanGestureRecognizer) {
+        let translatePoint = gesture.translation(in: self.view)
         figureView.center = CGPoint(x: figureView.center.x + translatePoint.x, y: figureView.center.y + translatePoint.y)
-        ger.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        gesture.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
         
-        //停止时检测
-        //拿到树
-        if ger.state == UIGestureRecognizer.State.ended {
-            print("开始检测")
+        if gesture.state == UIGestureRecognizer.State.ended {
             let centerPoint = figureView.center
-            
-            //构建节点数
-            fillAllViews { (dict) in
-                
-            }
+            checkWillSelect(point: centerPoint)
+        } else if gesture.state == UIGestureRecognizer.State.changed {
+            let centerPoint = figureView.center
+            checkWillSelect(point: centerPoint)
         }
     }
     
-    func checkWillSelect() {
-        // 1. 给定根节点
-        // 2.
+    func checkWillSelect(point:CGPoint) {
+        let keyWindow = UIApplication.shared.keyWindow
+        let event:UIEvent = UIEvent()
+        let fitView = keyWindow?.mj_hitTest(point, with: event)
+        
+        guard let tmpFitView = fitView else {
+            return
+        }
+        let keyIndex = fitView?.growingNodeKeyIndex
+        
+        let keyPath = GrowingNodeHelper.xPath(for: tmpFitView)
+        
+        let dict = dictFromNode(aNode: fitView, pageData: [:], keyIndex: keyIndex ?? 0, xPath: keyPath, isContainer: false)
+        fitView?.layer.borderWidth = 2
+        fitView?.layer.borderColor = UIColor.green.cgColor
+        print(dict)
     }
     
-   
+   //遍历获取所有节点树
     func fillAllViews(completion:(NSDictionary)->Void)   {
         //根据页面管理器，找到根VC节点
         //根据根VC节点生成节点管理器
@@ -96,7 +93,7 @@ class ClientCircleRootViewController: UIViewController {
                 return
             }
             //如果节点是圈选窗口本省
-            if aNode.isKind(of: ClientCircleWindow.self) {
+            if aNode.isKind(of: CircleWindow.self) {
                 context?.skipThisChilds()
                 return
             }
@@ -117,7 +114,7 @@ class ClientCircleRootViewController: UIViewController {
                 
             } else {
                 //若果节点不是vc
-                //                var dict =
+                //var dict =
             }
         })
     }

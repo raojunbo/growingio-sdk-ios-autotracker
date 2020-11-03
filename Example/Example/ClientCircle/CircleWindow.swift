@@ -1,5 +1,5 @@
 //
-//  ClientCircleWindow.swift
+//  CircleWindow.swift
 //  TestCircle
 //
 //  Created by rjb on 2020/10/29.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-class ClientCircleWindow: UIWindow {
+class CircleWindow: UIWindow {
     override init(frame: CGRect) {
         super.init(frame: frame)
         let alertValue = UIWindow.Level.alert.rawValue
         self.windowLevel = UIWindow.Level(rawValue: alertValue + 100)
-        self.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.3)
+        self.backgroundColor = UIColor(red: 220/255.0, green: 50/255.0, blue: 35/255.0, alpha: 0.2)
         self.isHidden = false
-        self.rootViewController = ClientCircleRootViewController()
+        self.rootViewController = CircleRootViewController()
     }
     
     required init?(coder: NSCoder) {
