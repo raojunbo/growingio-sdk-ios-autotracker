@@ -5,7 +5,7 @@
 //  Created by rjb on 2020/11/3.
 
 import UIKit
-
+import SwiftyJSON
 class CircleRootViewController: UIViewController {
     /// 选中器
     lazy var circleSelectView:CircleSelectView = {
@@ -41,8 +41,11 @@ class CircleRootViewController: UIViewController {
         let centerPoint = circleSelectView.center
         if gesture.state == UIGestureRecognizer.State.ended {
             let infoDict = nodeAndVCInfo(centerPoint)
-            if let infoNSDict = infoDict as NSDictionary? , let infoStr = infoNSDict.growingHelper_jsonString(){
+            if let infoNSDict = infoDict as NSDictionary? {
+                let infoStr = infoNSDict.growingHelper_jsonString()
                 print("这是合并信息\(infoStr)")
+                let infoJSON = JSON(infoNSDict)
+                
                let detailVC = CircleDetailViewController()
                 let nav = UINavigationController(rootViewController: detailVC)
                 self.present(nav, animated: true, completion: nil)

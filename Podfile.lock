@@ -21,6 +21,7 @@ PODS:
   - SDWebImage (5.9.4):
     - SDWebImage/Core (= 5.9.4)
   - SDWebImage/Core (5.9.4)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - AlicloudPush (~> 1.9.8)
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJRefresh
   - SDCycleScrollView (~> 1.75)
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/aliyun/aliyun-specs.git:
@@ -42,6 +44,7 @@ SPEC REPOS:
     - LookinServer
     - MJRefresh
     - SDWebImage
+    - SwiftyJSON
   https://github.com/growingio/giospec.git:
     - MBProgressHUD
     - SDCycleScrollView
@@ -62,7 +65,8 @@ SPEC CHECKSUMS:
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
   SDCycleScrollView: b3c9a5ed840c771c4938978174c7c9d9feefeb96
   SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 77b399c2e70e96c38298c4216d4ac257bf0f7484
+PODFILE CHECKSUM: c679b4fc35876a65dc31875dbdacd13dc91f90f3
 
 COCOAPODS: 1.9.3
