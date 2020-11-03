@@ -39,6 +39,9 @@ class ClientCircleTestRootViewController: UIViewController {
         if gesture.state == UIGestureRecognizer.State.ended {
             let centerPoint = figureView.center
             checkWillSelect(point: centerPoint)
+            fillAllViews { (dict) in
+                
+            }
         } else if gesture.state == UIGestureRecognizer.State.changed {
             let centerPoint = figureView.center
             checkWillSelect(point: centerPoint)
@@ -46,10 +49,7 @@ class ClientCircleTestRootViewController: UIViewController {
     }
     
     func checkWillSelect(point:CGPoint) {
-        let keyWindow = UIApplication.shared.keyWindow
-        let event:UIEvent = UIEvent()
-        let fitView = keyWindow?.mj_hitTest(point, with: event)
-        
+        let fitView = UIView.findCircleSuitableView(point: point)
         guard let tmpFitView = fitView else {
             return
         }
@@ -60,7 +60,8 @@ class ClientCircleTestRootViewController: UIViewController {
         let dict = dictFromNode(aNode: fitView, pageData: [:], keyIndex: keyIndex ?? 0, xPath: keyPath, isContainer: false)
         fitView?.layer.borderWidth = 2
         fitView?.layer.borderColor = UIColor.green.cgColor
-        print(dict)
+//        print(dict)
+       
     }
     
    //遍历获取所有节点树

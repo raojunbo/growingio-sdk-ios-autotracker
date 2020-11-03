@@ -28,6 +28,7 @@ class CircleRootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.view.isUserInteractionEnabled = true
         self.view.addSubview(circleSelectView)
         self.view.addGestureRecognizer(panGer)
@@ -39,11 +40,12 @@ class CircleRootViewController: UIViewController {
         gesture.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
         let centerPoint = circleSelectView.center
         if gesture.state == UIGestureRecognizer.State.ended {
-            let infoDict = nodeInfo(centerPoint)
-          
-            if let  infoNSDict = infoDict as NSDictionary? , let infoStr = infoNSDict.growingHelper_jsonString(){
-               
-                print("选中信息:\(infoStr)")
+            let infoDict = nodeAndVCInfo(centerPoint)
+            if let infoNSDict = infoDict as NSDictionary? , let infoStr = infoNSDict.growingHelper_jsonString(){
+                print("这是合并信息\(infoStr)")
+               let detailVC = CircleDetailViewController()
+                let nav = UINavigationController(rootViewController: detailVC)
+                self.present(nav, animated: true, completion: nil)
             }
            
             
@@ -55,10 +57,7 @@ class CircleRootViewController: UIViewController {
     
     @discardableResult
     func selectedNode(_ point:CGPoint) -> UIView? {
-        let keyWindow = UIApplication.shared.keyWindow
-        let event:UIEvent = UIEvent()
-        let fitView = keyWindow?.mj_hitTest(point, with: event)
-        
+        let fitView = UIView.findCircleSuitableView(point: point)
         coverView.removeFromSuperview()
         coverView.frame = fitView?.bounds ?? CGRect.zero
         fitView?.addSubview(coverView)
@@ -67,16 +66,37 @@ class CircleRootViewController: UIViewController {
     }
     
     @discardableResult
-    func nodeInfo(_ point:CGPoint) -> [String:Any]? {
+    func nodeAndVCInfo(_ point:CGPoint) -> [String:Any]? {
         let fitView = selectedNode(point)
         guard let tmpFitView = fitView else {
             return nil
         }
         //获取节点
-        let keyPath = GrowingNodeHelper.xPath(for: tmpFitView)
-        let keyIndex = tmpFitView.growingNodeKeyIndex
-        let dict = dictFromNode(aNode: tmpFitView, pageData: [:], keyIndex: keyIndex ?? 0, xPath: keyPath, isContainer: false)
-        return dict
+        let viewInfoDict = nodeViewInfo(tmpFitView)
+        let vcInfoDict = nodeVCInfo()
+
+        var allDict:[String:Any] = [:]
+        allDict["view"] = viewInfoDict
+        allDict["page"] = vcInfoDict
+        return allDict
+    }
+    
+    func nodeViewInfo(_ nodeView:UIView) -> [String:Any]? {
+        let keyPath = GrowingNodeHelper.xPath(for: nodeView)
+        let keyIndex = nodeView.growingNodeKeyIndex
+        let viewInfoDict = dictFromNode(aNode: nodeView, pageData: [:], keyIndex: keyIndex ?? 0, xPath: keyPath, isContainer: false)
+        return viewInfoDict
+    }
+    
+    func nodeVCInfo() -> [String:Any]? {
+        let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
+        var page = currentVC?.growingPageHelper_getPageObject()
+        if  page == nil {
+            GrowingPageManager.sharedInstance()?.createdViewControllerPage(currentVC)
+            page = currentVC?.growingPageHelper_getPageObject()
+        }
+        let pageDict = dictFromPage(aNode: currentVC, xPath: page?.path)
+        return pageDict
     }
     
     //页面信息的获取
@@ -159,21 +179,4 @@ class CircleRootViewController: UIViewController {
         dict["isContainer"] = isContainer
         return dict
     }
-    
-//    func getElementLevelInWindow(aNode:GrowingNode?, superView:UIView?) {
-//        guard let aNode = aNode else {
-//            return
-//        }
-//        guard let superView = superView else {
-//            return
-//        }
-//        for (index,_) in superView.subviews.enumerated() {
-//            self.nodeZLevel = self.nodeZLevel + 1
-//            if superView.subviews[index] === aNode {
-//                self.zLevel = self.nodeZLevel
-//            }else {
-//                getElementLevelInWindow(aNode: aNode, superView: superView.subviews[index])
-//            }
-//        }
-//    }
 }

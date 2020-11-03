@@ -17,6 +17,7 @@ target 'Example' do
   pod 'MBProgressHUD'
   pod 'AlicloudPush', '~> 1.9.8'
   pod 'LookinServer', :configurations => ['Debug']
+  pod 'SwiftyJSON'
 end
 
 target 'ExampleTests' do

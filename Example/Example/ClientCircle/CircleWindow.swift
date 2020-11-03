@@ -28,7 +28,11 @@ class CircleWindow: UIWindow {
             return nil
         } else if view == self.rootViewController?.view {
             return nil
-        } else {
+        }
+//        else if view == self.rootVC.view {
+//            return nil
+//        }
+        else {
             return view
         }
     }
