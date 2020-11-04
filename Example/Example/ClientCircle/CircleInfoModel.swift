@@ -20,69 +20,63 @@
 
 import Foundation
 import SwiftyJSON
-struct CircleViewModel {
+
+struct CircleNodeModel {
     var top:Float?
     var left:Float?
     var width:Float?
     var height:Float?
     
     var xpath:String?
-    var content:String?
     var nodeType:String?
+    /// 类名
+    var className:String?
+    var nodeName:String?
+    var content:String?
+    var snapshot:UIImage?
     
     init(_ jsonData:JSON) {
         top = jsonData["top"].floatValue
+        left = jsonData["left"].floatValue
+        width = jsonData["width"].floatValue
+        height = jsonData["height"].floatValue
         
-//        username = jsonData["username"].stringValue
-//        age = jsonData["age"].intValue
-//        weight = jsonData["weight"].doubleValue
-//        dictionary = jsonData["dictionary"].dictionaryValue
-//        bestFriend = SwiftUserModel2(jsonData["bestFriend"])
+        xpath = jsonData["xpath"].stringValue
         
-        //手动做map
-//        friends = jsonData["friends"].array?.map({ (json) -> SwiftUserModel2 in
-//            SwiftUserModel2(json)
-//        })
+        content = jsonData["content"].stringValue
+        nodeType = jsonData["nodeType"].stringValue
+        className = jsonData["className"].stringValue
+        nodeName = jsonData["nodeName"].stringValue
         
     }
 }
 
-struct CircleVcModel {
-    var top:Float?
-    var left:Float?
-    var width:Float?
-    var height:Float?
-    var xpath:String?
-    
+//struct CircleVcModel {
+//    var top:Float?
+//    var left:Float?
+//    var width:Float?
+//    var height:Float?
+//    var xpath:String?
+//    /// 类名
+//    var className:String?
+//    var nodeName:String?
+//    var content:String?
+//    var nodeType:String?
 //    init(_ jsonData:JSON) {
-//        username = jsonData["username"].stringValue
-//        age = jsonData["age"].intValue
-//        weight = jsonData["weight"].doubleValue
-//        dictionary = jsonData["dictionary"].dictionaryValue
-//        bestFriend = SwiftUserModel2(jsonData["bestFriend"])
-//
-//        //手动做map
-//        friends = jsonData["friends"].array?.map({ (json) -> SwiftUserModel2 in
-//            SwiftUserModel2(json)
-//        })
-//
+//        top = jsonData["top"].floatValue
+//        left = jsonData["left"].floatValue
+//        width = jsonData["width"].floatValue
+//        height = jsonData["height"].floatValue
+//        xpath = jsonData["xpath"].stringValue
 //    }
-}
+//}
 
 struct CircleInfoModel {
-    var viewInfo:CircleViewModel?
-    var vcInfo:CircleVcModel?
-//    init(_ jsonData:JSON) {
-//        username = jsonData["username"].stringValue
-//        age = jsonData["age"].intValue
-//        weight = jsonData["weight"].doubleValue
-//        dictionary = jsonData["dictionary"].dictionaryValue
-//        bestFriend = SwiftUserModel2(jsonData["bestFriend"])
-//        
-//        //手动做map
-//        friends = jsonData["friends"].array?.map({ (json) -> SwiftUserModel2 in
-//            SwiftUserModel2(json)
-//        })
-//    }
+    var viewInfo:CircleNodeModel?
+    var vcInfo:CircleNodeModel?
+    init(_ jsonData:JSON) {
+        viewInfo = CircleNodeModel(jsonData["view"])
+        vcInfo = CircleNodeModel(jsonData["page"])
+    }
 }
  

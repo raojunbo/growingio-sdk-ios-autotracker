@@ -24,6 +24,8 @@ class CircleSelectCoverView: UIView {
     override init(frame: CGRect) {
         super.init(frame:frame)
         self.backgroundColor =  UIColor(red: 220/255.0, green: 50/255.0, blue: 35/255.0, alpha: 0.5)
+        self.layer.borderWidth = 2
+        self.layer.borderColor = UIColor(red: 220/255.0, green: 50/255.0, blue: 35/255.0, alpha: 1).cgColor
         self.isUserInteractionEnabled = false
     }
     

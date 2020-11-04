@@ -6,6 +6,7 @@
 
 import UIKit
 import SwiftyJSON
+
 class CircleRootViewController: UIViewController {
     /// 选中器
     lazy var circleSelectView:CircleSelectView = {
@@ -38,24 +39,34 @@ class CircleRootViewController: UIViewController {
         let translatePoint = gesture.translation(in: self.view)
         circleSelectView.center = CGPoint(x: circleSelectView.center.x + translatePoint.x, y: circleSelectView.center.y + translatePoint.y)
         gesture.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        
         let centerPoint = circleSelectView.center
         if gesture.state == UIGestureRecognizer.State.ended {
             let infoDict = nodeAndVCInfo(centerPoint)
             if let infoNSDict = infoDict as NSDictionary? {
                 let infoStr = infoNSDict.growingHelper_jsonString()
-                print("这是合并信息\(infoStr)")
-                let infoJSON = JSON(infoNSDict)
+                if let tmpInfoStr = infoStr {
+                    print(tmpInfoStr)
+                }
                 
-               let detailVC = CircleDetailViewController()
-                let nav = UINavigationController(rootViewController: detailVC)
-                self.present(nav, animated: true, completion: nil)
+                var circleInfoModel = CircleInfoModel(JSON(infoNSDict))
+                let viewShot = fitView?.growingNodeScreenShot(withScale: UIScreen.main.scale)
+                let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
+                let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
+                circleInfoModel.vcInfo?.snapshot = vcShot
+                circleInfoModel.viewInfo?.snapshot = viewShot
+                pushToDetailVC(circleInfo: circleInfoModel)
             }
-           
-            
         } else if gesture.state == UIGestureRecognizer.State.changed {
-            fitView?.layer.borderWidth = 0
             fitView = selectedNode(centerPoint)
         }
+    }
+    
+    func pushToDetailVC(circleInfo:CircleInfoModel?) {
+        let detailVC = CircleDetailViewController()
+        detailVC.circleInfo = circleInfo
+        let nav = UINavigationController(rootViewController: detailVC)
+        self.present(nav, animated: true, completion: nil)
     }
     
     @discardableResult
@@ -64,8 +75,7 @@ class CircleRootViewController: UIViewController {
         coverView.removeFromSuperview()
         coverView.frame = fitView?.bounds ?? CGRect.zero
         fitView?.addSubview(coverView)
-        
-       return fitView
+        return fitView
     }
     
     @discardableResult
@@ -74,10 +84,11 @@ class CircleRootViewController: UIViewController {
         guard let tmpFitView = fitView else {
             return nil
         }
-        //获取节点
+        //获取view节点信息
         let viewInfoDict = nodeViewInfo(tmpFitView)
+        //取vc节点信息
         let vcInfoDict = nodeVCInfo()
-
+        
         var allDict:[String:Any] = [:]
         allDict["view"] = viewInfoDict
         allDict["page"] = vcInfoDict
@@ -87,7 +98,7 @@ class CircleRootViewController: UIViewController {
     func nodeViewInfo(_ nodeView:UIView) -> [String:Any]? {
         let keyPath = GrowingNodeHelper.xPath(for: nodeView)
         let keyIndex = nodeView.growingNodeKeyIndex
-        let viewInfoDict = dictFromNode(aNode: nodeView, pageData: [:], keyIndex: keyIndex ?? 0, xPath: keyPath, isContainer: false)
+        let viewInfoDict = dictFromNode(aNode: nodeView, keyIndex: keyIndex, xPath: keyPath, isContainer: false)
         return viewInfoDict
     }
     
@@ -103,17 +114,23 @@ class CircleRootViewController: UIViewController {
     }
     
     //页面信息的获取
-    func dictFromPage(aNode:GrowingNode?,xPath:String?) -> [String:Any] {
-        var dict = [String:Any]()
-        let frame = aNode?.growingNodeFrame() //获取节点的frame
-        if let frame = frame,!frame.equalTo(CGRect.zero) {//有值并且不是zero
-            dict["left"] = frame.origin.x
-            dict["top"] = frame.origin.y
-            dict["width"] = frame.size.width
-            dict["height"] = frame.size.height
+    func dictFromPage(aNode:GrowingNode?,xPath:String?) -> [String:Any]? {
+        guard let aNode = aNode else {
+            return nil
         }
+        var dict = [String:Any]()
+        let frame = aNode.growingNodeFrame()
         
-        dict["path"] = xPath
+        dict["left"] = frame.origin.x
+        dict["top"] = frame.origin.y
+        dict["width"] = frame.size.width
+        dict["height"] = frame.size.height
+        
+        dict["xpath"] = xPath
+        dict["className"] = "\(type(of: aNode))"
+        dict["nodeName"] = aNode.growingNodeName()
+        dict["content"] =  aNode.growingNodeContent()
+        
         let vc = aNode as? UIViewController
         if let vc = vc,let title = vc.title {
             dict["title"] = title
@@ -122,10 +139,9 @@ class CircleRootViewController: UIViewController {
         dict["isIgnored"] = vc?.growingPageHelper_pageDidIgnore()
         return dict
     }
-
+    
     //普通节点信息的获取
-    func dictFromNode(aNode:GrowingNode?,pageData:[String:Any],keyIndex:Int,xPath:String,isContainer:Bool) -> [String:Any]? {
-        //节点不存在
+    func dictFromNode(aNode:GrowingNode?,keyIndex:Int,xPath:String,isContainer:Bool) -> [String:Any]? {
         guard let aNode = aNode else {
             return nil
         }
@@ -135,21 +151,13 @@ class CircleRootViewController: UIViewController {
         }
         
         var dict = [String:Any]()
-        //合并信息
-        dict.merge(pageData) { (one, two) -> Any in
-            return one
-        }
+        
         //获取节点内容
-        var v:String? = aNode.growingNodeContent()
-        if v == nil  {
-            v = ""
-        }else{
-            v = v?.growingHelper_safeSubString(withLength: 50)
-        }
+        let content:String? = aNode.growingNodeContent()
+        dict["content"] = content
+        dict["className"] = "\(type(of: aNode))"
+        dict["nodeName"] = aNode.growingNodeName()
         
-        dict["content"] = v
-        
-
         var nodeType = "TEXT"
         if aNode.isKind(of: UITextField.self) || aNode.isKind(of: UISearchBar.self) || aNode.isKind(of: UITextView.self){
             nodeType = "INPUT"
@@ -160,10 +168,10 @@ class CircleRootViewController: UIViewController {
         }
         //为node 元素添加层级关系
         if aNode.isKind(of: UIView.self) {
-//            nodeZLevel = Float(aNode.growingNodeWindow()?.windowLevel.rawValue ?? 0)
-//            zLevel = 0
-//            self.getElementLevelInWindow(aNode:aNode, superView: aNode.growingNodeWindow())
-//            dict["zLevel"] = self.zLevel
+            //            nodeZLevel = Float(aNode.growingNodeWindow()?.windowLevel.rawValue ?? 0)
+            //            zLevel = 0
+            //            self.getElementLevelInWindow(aNode:aNode, superView: aNode.growingNodeWindow())
+            //            dict["zLevel"] = self.zLevel
         }
         
         if keyIndex >= 0 {
@@ -172,14 +180,13 @@ class CircleRootViewController: UIViewController {
         dict["xpath"] = xPath
         
         let frame = aNode.growingNodeFrame()
-        if !frame.equalTo(CGRect.zero) {
-            dict["left"] = frame.origin.x
-            dict["top"] = frame.origin.y
-            dict["width"] = frame.width
-            dict["height"] = frame.height
-        }
+        dict["left"] = frame.origin.x
+        dict["top"] = frame.origin.y
+        dict["width"] = frame.width
+        dict["height"] = frame.height
         dict["nodeType"] = nodeType
         dict["isContainer"] = isContainer
         return dict
     }
 }
+

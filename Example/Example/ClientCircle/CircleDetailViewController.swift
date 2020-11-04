@@ -22,7 +22,7 @@ import UIKit
 
 private let kTopMargin:CGFloat = 10.0
 private let kLeftMargin:CGFloat = 10.0
-private let kDetailCellHeight:CGFloat = 220
+private let kDetailCellHeight:CGFloat = 170
 
 class CircleDetailCell:UITableViewCell {
     let bgView:UIView = UIView.init(frame: CGRect.zero)
@@ -30,37 +30,70 @@ class CircleDetailCell:UITableViewCell {
     let snapShotView:UIImageView = UIImageView.init(frame: CGRect.zero)
     let classNameLabel:UILabel = UILabel.init(frame: CGRect.zero)
     let contentLabel:UILabel = UILabel.init(frame: CGRect.zero)
+    var _dataModel:CircleNodeModel?
+    var dataModel:CircleNodeModel? {
+        get {
+            return _dataModel
+        }
+        set {
+            _dataModel = newValue
+            refreshView()
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.contentView.backgroundColor = UIColor.white
         createUI()
     }
     
     func createUI()  {
-        let screenWidth = UIScreen.main.bounds.width
-        bgView.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: screenWidth - kLeftMargin * 2, height: kDetailCellHeight - kTopMargin * 2)
-        let bgViewWidth =  screenWidth - kLeftMargin * 2
-        bgView.backgroundColor = UIColor(red: 42/255.0, green: 153/255.0, blue: 213/255.0, alpha: 1)
-        
-        typeLabel.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: 100, height: 40)
-        typeLabel.text = "页面"
-        
-        snapShotView.frame = CGRect(x: bgViewWidth - kLeftMargin * 2 - 100, y: kTopMargin, width: 100, height: 100)
-        snapShotView.backgroundColor = UIColor.red
-        
-        classNameLabel.frame = CGRect(x: kLeftMargin, y: typeLabel.frame.origin.y + typeLabel.frame.size.height + kTopMargin, width: 100, height: 40)
-        classNameLabel.text = "类名"
-        
-        contentLabel.frame = CGRect(x: kLeftMargin, y: classNameLabel.frame.origin.y + classNameLabel.frame.size.height + kTopMargin, width: 100, height: 40)
-        contentLabel.text = "内容"
-      
+        snapShotView.contentMode = .scaleAspectFit
         contentView.addSubview(bgView)
         bgView.addSubview(typeLabel)
         bgView.addSubview(snapShotView)
         bgView.addSubview(classNameLabel)
         bgView.addSubview(contentLabel)
         
-        self.contentView.backgroundColor = UIColor.white
+        let screenWidth = UIScreen.main.bounds.width
+        let bgViewWidth =  screenWidth - kLeftMargin * 2
+
+        bgView.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: screenWidth - kLeftMargin * 2, height: kDetailCellHeight - kTopMargin * 2)
+        bgView.layer.cornerRadius = 4
+        bgView.layer.masksToBounds = true
+        bgView.backgroundColor = UIColor(red: 42/255.0, green: 153/255.0, blue: 213/255.0, alpha: 1)
+        snapShotView.frame = CGRect(x: bgViewWidth - kLeftMargin * 2 - 100, y: kTopMargin, width: 100, height: kDetailCellHeight - kTopMargin * 2)
+    }
+    
+    func refreshView()  {
+       
+        typeLabel.frame = CGRect(x: 0, y: 0, width: 250, height: 0)
+        typeLabel.text = "页面"
+        typeLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        typeLabel.textColor = UIColor.white
+        typeLabel.lineBreakMode = .byCharWrapping
+        typeLabel.numberOfLines = 0
+        typeLabel.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: 250, height: typeLabel.requiredHeight)
+
+        classNameLabel.frame = CGRect(x: 0, y: 0 , width: 250, height: 0)
+        classNameLabel.text = "类名"
+        classNameLabel.textColor = UIColor.white
+        classNameLabel.font = UIFont.systemFont(ofSize: 14)
+        classNameLabel.numberOfLines = 0
+        classNameLabel.lineBreakMode = .byCharWrapping
+        classNameLabel.frame = CGRect(x: kLeftMargin, y: typeLabel.frame.origin.y + typeLabel.frame.size.height + kTopMargin, width: 250, height:classNameLabel.requiredHeight)
+        
+        contentLabel.frame = CGRect(x: 0, y: 0, width: 250, height: 0)
+        contentLabel.text = "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        contentLabel.numberOfLines = 0
+        contentLabel.textColor = UIColor.white
+        contentLabel.font = UIFont.systemFont(ofSize: 14)
+        contentLabel.frame = CGRect(x: kLeftMargin, y: classNameLabel.frame.origin.y + classNameLabel.frame.size.height + kTopMargin, width: 250, height: contentLabel.requiredHeight)
+        
+        typeLabel.text = dataModel?.nodeName
+        classNameLabel.text = dataModel?.className
+        contentLabel.text = dataModel?.content
+        snapShotView.image = dataModel?.snapshot
     }
     
     required init?(coder: NSCoder) {
@@ -69,12 +102,13 @@ class CircleDetailCell:UITableViewCell {
 }
 
 class CircleDetailViewController: UIViewController {
-    var contentStr:String? = nil
+    var circleInfo:CircleInfoModel? = nil
     lazy var tableView: UITableView = {
         var tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height), style: UITableView.Style.plain)
         tableView.register(CircleDetailCell.self, forCellReuseIdentifier: "cellIdentifier")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         return tableView
     }()
     
@@ -94,6 +128,13 @@ extension CircleDetailViewController:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
+        if let circleCell = cell as? CircleDetailCell {
+            if indexPath.row == 0 {
+                circleCell.dataModel = circleInfo?.vcInfo
+            }else if indexPath.row == 1{
+                circleCell.dataModel = circleInfo?.viewInfo
+            }
+        }
         return cell
     }
     
