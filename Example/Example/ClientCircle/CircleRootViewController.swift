@@ -42,23 +42,10 @@ class CircleRootViewController: UIViewController {
         
         let centerPoint = circleSelectView.center
         if gesture.state == UIGestureRecognizer.State.ended {
-            let infoDict = nodeAndVCInfo(centerPoint)
-            if let infoNSDict = infoDict as NSDictionary? {
-                let infoStr = infoNSDict.growingHelper_jsonString()
-                if let tmpInfoStr = infoStr {
-                    print("信息：" + tmpInfoStr)
-                }
-                
-                var circleInfoModel = CircleInfoModel(JSON(infoNSDict))
-                let viewShot = fitView?.growingNodeScreenShot(withScale: UIScreen.main.scale)
-                let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
-                let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
-                circleInfoModel.vcInfo?.snapshot = vcShot
-                circleInfoModel.viewInfo?.snapshot = viewShot
-                pushToDetailVC(circleInfo: circleInfoModel)
-            }
+            let circleInfoModel = nodeAndVCInfo(centerPoint)
+            pushToDetailVC(circleInfo: circleInfoModel)
         } else if gesture.state == UIGestureRecognizer.State.changed {
-            fitView = selectedNode(centerPoint)
+            fitView = selectedNode(centerPoint,hadCover: true)
         }
     }
     
@@ -70,47 +57,60 @@ class CircleRootViewController: UIViewController {
     }
     
     @discardableResult
-    func selectedNode(_ point:CGPoint) -> UIView? {
+    func selectedNode(_ point:CGPoint, hadCover:Bool) -> UIView? {
         let fitView = UIView.findCircleSuitableView(point: point)
         coverView.removeFromSuperview()
         coverView.frame = fitView?.bounds ?? CGRect.zero
-        fitView?.addSubview(coverView)
+        if hadCover {
+            fitView?.addSubview(coverView)
+        }
         return fitView
     }
     
     @discardableResult
-    func nodeAndVCInfo(_ point:CGPoint) -> [String:Any]? {
-        let fitView = selectedNode(point)
+    func nodeAndVCInfo(_ point:CGPoint) -> CircleInfoModel? {
+        let fitView = selectedNode(point,hadCover: false)
         guard let tmpFitView = fitView else {
             return nil
         }
-        var allDict:[String:Any] = [:]
         
         //获取view节点信息
-        let viewInfoDict = nodeViewInfo(tmpFitView)
+        var viewNodeModel = nodeViewInfo(tmpFitView)
+        let viewShot = fitView?.growingNodeScreenShot(withScale: UIScreen.main.scale)
+        viewNodeModel?.snapshot = viewShot
         
         //获取cell节点信息
         let cell = UIView.checkParentHadCell(fitView: tmpFitView)
+        var cellNodeModel:CircleNodeModel?
         if let tmpCell = cell  {
-            let cellInfoDict = nodeViewInfo(tmpCell)
-            allDict["cell"] = cellInfoDict
+            cellNodeModel = nodeViewInfo(tmpCell)
+            cellNodeModel?.snapshot =  tmpCell.growingNodeScreenShot(withScale: UIScreen.main.scale)
         }
         
         //取vc节点信息
-        let vcInfoDict = nodeVCInfo()
-        allDict["view"] = viewInfoDict
-        allDict["page"] = vcInfoDict
-        return allDict
+        var vcNodeModel = nodeVCInfo()
+        let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
+        let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
+        vcNodeModel?.snapshot = vcShot
+        
+        var circleInfoModel = CircleInfoModel(JSON())
+        circleInfoModel.viewInfo = viewNodeModel
+        circleInfoModel.vcInfo = vcNodeModel
+        circleInfoModel.cellInfo = cellNodeModel
+        return circleInfoModel
     }
     
-    func nodeViewInfo(_ nodeView:GrowingNode) -> [String:Any]? {
+    func nodeViewInfo(_ nodeView:GrowingNode) -> CircleNodeModel? {
         let keyPath = GrowingNodeHelper.xPath(for: nodeView)
         let keyIndex = nodeView.growingNodeKeyIndex
         let viewInfoDict = dictFromNode(aNode: nodeView, keyIndex: keyIndex, xPath: keyPath, isContainer: false)
-        return viewInfoDict
+        guard let tmpviewInfoDict = viewInfoDict else {
+            return nil
+        }
+        return  CircleNodeModel(JSON(tmpviewInfoDict))
     }
     
-    func nodeVCInfo() -> [String:Any]? {
+    func nodeVCInfo() -> CircleNodeModel? {
         let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
         var page = currentVC?.growingPageHelper_getPageObject()
         if  page == nil {
@@ -121,7 +121,10 @@ class CircleRootViewController: UIViewController {
             return nil
         }
         let pageDict = dictFromPage(aNode: tmpCurrentVC, xPath: page?.path)
-        return pageDict
+        guard let tmpPageDict = pageDict else {
+            return nil
+        }
+        return CircleNodeModel(JSON(tmpPageDict))
     }
     
     //页面信息的获取
@@ -150,7 +153,7 @@ class CircleRootViewController: UIViewController {
     
     //普通节点信息的获取
     func dictFromNode(aNode:GrowingNode,keyIndex:Int,xPath:String,isContainer:Bool) -> [String:Any]? {
-
+        
         var dict = [String:Any]()
         
         //获取节点内容
