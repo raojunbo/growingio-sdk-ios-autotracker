@@ -46,7 +46,7 @@ class CircleRootViewController: UIViewController {
             if let infoNSDict = infoDict as NSDictionary? {
                 let infoStr = infoNSDict.growingHelper_jsonString()
                 if let tmpInfoStr = infoStr {
-                    print(tmpInfoStr)
+                    print("信息：" + tmpInfoStr)
                 }
                 
                 var circleInfoModel = CircleInfoModel(JSON(infoNSDict))
@@ -84,18 +84,26 @@ class CircleRootViewController: UIViewController {
         guard let tmpFitView = fitView else {
             return nil
         }
+        var allDict:[String:Any] = [:]
+        
         //获取view节点信息
         let viewInfoDict = nodeViewInfo(tmpFitView)
+        
+        //获取cell节点信息
+        let cell = UIView.checkParentHadCell(fitView: tmpFitView)
+        if let tmpCell = cell  {
+            let cellInfoDict = nodeViewInfo(tmpCell)
+            allDict["cell"] = cellInfoDict
+        }
+        
         //取vc节点信息
         let vcInfoDict = nodeVCInfo()
-        
-        var allDict:[String:Any] = [:]
         allDict["view"] = viewInfoDict
         allDict["page"] = vcInfoDict
         return allDict
     }
     
-    func nodeViewInfo(_ nodeView:UIView) -> [String:Any]? {
+    func nodeViewInfo(_ nodeView:GrowingNode) -> [String:Any]? {
         let keyPath = GrowingNodeHelper.xPath(for: nodeView)
         let keyIndex = nodeView.growingNodeKeyIndex
         let viewInfoDict = dictFromNode(aNode: nodeView, keyIndex: keyIndex, xPath: keyPath, isContainer: false)
@@ -109,15 +117,15 @@ class CircleRootViewController: UIViewController {
             GrowingPageManager.sharedInstance()?.createdViewControllerPage(currentVC)
             page = currentVC?.growingPageHelper_getPageObject()
         }
-        let pageDict = dictFromPage(aNode: currentVC, xPath: page?.path)
+        guard let tmpCurrentVC = currentVC else {
+            return nil
+        }
+        let pageDict = dictFromPage(aNode: tmpCurrentVC, xPath: page?.path)
         return pageDict
     }
     
     //页面信息的获取
-    func dictFromPage(aNode:GrowingNode?,xPath:String?) -> [String:Any]? {
-        guard let aNode = aNode else {
-            return nil
-        }
+    func dictFromPage(aNode:GrowingNode,xPath:String?) -> [String:Any]? {
         var dict = [String:Any]()
         let frame = aNode.growingNodeFrame()
         
@@ -141,15 +149,8 @@ class CircleRootViewController: UIViewController {
     }
     
     //普通节点信息的获取
-    func dictFromNode(aNode:GrowingNode?,keyIndex:Int,xPath:String,isContainer:Bool) -> [String:Any]? {
-        guard let aNode = aNode else {
-            return nil
-        }
-        //节点无法交互
-        guard !aNode.growingNodeUserInteraction() else {
-            return nil
-        }
-        
+    func dictFromNode(aNode:GrowingNode,keyIndex:Int,xPath:String,isContainer:Bool) -> [String:Any]? {
+
         var dict = [String:Any]()
         
         //获取节点内容

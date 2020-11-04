@@ -52,5 +52,33 @@ extension UIView {
         //没有了子view，且自己满足条件
         return self
     }
-
+    
+   class func checkParentHadCell(fitView: UIView) -> UIView? {
+        //结束条件
+        //空
+        //UITableViewCell
+        var curView:UIView? = fitView
+        while let tmpCurView = curView {
+            if type(of: tmpCurView) == UITableViewCell.self {
+                break
+            }
+            curView = tmpCurView.superview
+        }
+        return curView
+    }
+    
+    //    private func tableViewCellSystemView() -> Bool{
+    //        let fitViewStr = "\(type(of: self))"
+    //        switch fitViewStr {
+    //        case "UITableViewCellContentView" :
+    //            return true
+    //        case "UITableViewLabel":
+    //            return true
+    //        case "_UISystemBackgroundView":
+    //            return true
+    //        default:
+    //            return false
+    //        }
+    //    }
+    
 }

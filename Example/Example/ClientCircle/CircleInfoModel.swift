@@ -51,32 +51,14 @@ struct CircleNodeModel {
     }
 }
 
-//struct CircleVcModel {
-//    var top:Float?
-//    var left:Float?
-//    var width:Float?
-//    var height:Float?
-//    var xpath:String?
-//    /// 类名
-//    var className:String?
-//    var nodeName:String?
-//    var content:String?
-//    var nodeType:String?
-//    init(_ jsonData:JSON) {
-//        top = jsonData["top"].floatValue
-//        left = jsonData["left"].floatValue
-//        width = jsonData["width"].floatValue
-//        height = jsonData["height"].floatValue
-//        xpath = jsonData["xpath"].stringValue
-//    }
-//}
-
 struct CircleInfoModel {
     var viewInfo:CircleNodeModel?
     var vcInfo:CircleNodeModel?
+    var cellInfo:CircleNodeModel?
     init(_ jsonData:JSON) {
         viewInfo = CircleNodeModel(jsonData["view"])
         vcInfo = CircleNodeModel(jsonData["page"])
+        cellInfo = CircleNodeModel(jsonData["cell"])
     }
 }
  

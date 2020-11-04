@@ -31,7 +31,6 @@
     self.attributesCount = [GIODataProcessOperation getRandomLengthFrom:1 to:5];
 
     [self setupTableView];
-
     self.navigationItem.title = [NSString stringWithFormat:@"%@事件", self.eventType];
 }
 

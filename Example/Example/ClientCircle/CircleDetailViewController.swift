@@ -62,7 +62,10 @@ class CircleDetailCell:UITableViewCell {
         bgView.layer.cornerRadius = 4
         bgView.layer.masksToBounds = true
         bgView.backgroundColor = UIColor(red: 42/255.0, green: 153/255.0, blue: 213/255.0, alpha: 1)
-        snapShotView.frame = CGRect(x: bgViewWidth - kLeftMargin * 2 - 100, y: kTopMargin, width: 100, height: kDetailCellHeight - kTopMargin * 2)
+        
+        snapShotView.frame = CGRect(x: bgViewWidth - kLeftMargin * 2 - 100, y: kTopMargin, width: 100, height: kDetailCellHeight - kTopMargin * 4)
+        snapShotView.layer.cornerRadius = 4
+        snapShotView.layer.masksToBounds = true
     }
     
     func refreshView()  {
@@ -123,7 +126,7 @@ class CircleDetailViewController: UIViewController {
 
 extension CircleDetailViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,6 +136,8 @@ extension CircleDetailViewController:UITableViewDelegate,UITableViewDataSource {
                 circleCell.dataModel = circleInfo?.vcInfo
             }else if indexPath.row == 1{
                 circleCell.dataModel = circleInfo?.viewInfo
+            }else if indexPath.row == 2 {
+                circleCell.dataModel = circleInfo?.cellInfo
             }
         }
         return cell
