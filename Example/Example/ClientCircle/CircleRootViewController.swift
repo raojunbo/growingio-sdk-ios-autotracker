@@ -74,9 +74,6 @@ class CircleRootViewController: UIViewController {
             return nil
         }
         //选中信息组合
-        //
-        
-    
         var circleInfoModel = CircleInfoModel()
         
         //获取view节点信息
@@ -86,7 +83,8 @@ class CircleRootViewController: UIViewController {
         
         //获取cell节点信息
         var cellNodeModel:CircleNodeModel?
-        if type(of: tmpFitView) != UITableViewCell.self {
+        let isCell = tmpFitView is  UITableViewCell || tmpFitView is  UICollectionViewCell
+        if !isCell {
             let cell = UIView.checkParentHadCell(fitView: tmpFitView)
             if let tmpCell = cell  {
                 cellNodeModel = nodeViewInfo(tmpCell)

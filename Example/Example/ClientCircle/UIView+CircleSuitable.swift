@@ -44,6 +44,10 @@ extension UIView {
             return nil
         }
         
+        //如果是某些系统控件，不需要继续寻找子view
+        if checkIsSystmeView(self) {
+            return self
+        }
         //寻找合适的子view(从后向前遍历)
         for childView in self.subviews.reversed() {
             //将当前的“点”的坐标系，转成子控件的坐标系；也就是点在子坐标系里的位置。
@@ -67,7 +71,8 @@ extension UIView {
         //结束条件 1:空 2:UITableViewCell
         var curView:UIView? = fitView
         while let tmpCurView = curView {
-            if type(of: tmpCurView) == UITableViewCell.self  {
+            let isCell = tmpCurView is UITableViewCell || tmpCurView is UICollectionViewCell
+            if isCell  {
                 break
             }
             curView = tmpCurView.superview
@@ -87,11 +92,22 @@ extension UIView {
         return curView
     }
     
-    //检测是否是系统内部view
+    //检测是否是系统UIView
+    private func checkIsSystmeView(_ fitView:UIView) -> Bool {
+        let fitViewStr = "\(type(of: fitView))"
+        switch fitViewStr {
+        case "UISwitch":
+            return true
+        default:
+            return false
+        }
+    }
+    
+    //检测选中的是否是系统内部view（是系统内部，返回合适的父view）
      private func checkInnerSystemView(_ fitView:UIView) -> Bool{
          let fitViewStr = "\(type(of: fitView))"
          switch fitViewStr {
-         //cell
+         //UITableViewCell
          case "UITableViewCellContentView" :
              return true
          case "_UISystemBackgroundView":
@@ -111,6 +127,11 @@ extension UIView {
          case "_UINavigationBarContentView":
             return true
             
+        //UISlider
+         case "_UISlideriOSVisualElement":
+            return true
+            
+         
          default:
              return false
          }
