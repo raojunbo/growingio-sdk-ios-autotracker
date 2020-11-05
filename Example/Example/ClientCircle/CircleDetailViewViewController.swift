@@ -49,7 +49,11 @@ class CircleDetailViewViewController: UIViewController {
     
     @objc func save()  {
         //生成需要上传的json数据
-        
+        //卖点名称
+        //event_type:点击事件
+        //path
+        //event_name
+        //screen_url
     }
     
     func layoutUI()  {
@@ -106,8 +110,10 @@ class CircleDetailViewViewController: UIViewController {
         
         self.view.addSubview(snapshotView)
         self.view.addSubview(pageNameLabel)
+        
         self.view.addSubview(xpathLabel)
         self.view.addSubview(contentLabel)
+        
         self.view.addSubview(saveButton)
     }
 

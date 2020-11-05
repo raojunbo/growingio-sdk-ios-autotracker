@@ -86,7 +86,7 @@ class CircleDetailCell:UITableViewCell {
         classNameLabel.frame = CGRect(x: kLeftMargin, y: typeLabel.frame.origin.y + typeLabel.frame.size.height + kTopMargin, width: 250, height:classNameLabel.requiredHeight)
         
         contentLabel.frame = CGRect(x: 0, y: 0, width: 250, height: 0)
-        contentLabel.text = "内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        contentLabel.text = "内容"
         contentLabel.numberOfLines = 0
         contentLabel.textColor = UIColor.white
         contentLabel.font = UIFont.systemFont(ofSize: 14)
