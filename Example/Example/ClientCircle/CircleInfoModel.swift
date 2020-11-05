@@ -21,7 +21,14 @@
 import Foundation
 import SwiftyJSON
 
+enum CircleNodeDisplayType:String {
+    case CircleNodeDisplayVC = "VC"
+    case CircleNodeDisplayCell = "CELL"
+    case CircleNodeDisplayView = "VIEW"
+}
+
 struct CircleNodeModel {
+    var displayType:CircleNodeDisplayType
     var top:Float?
     var left:Float?
     var width:Float?
@@ -35,7 +42,8 @@ struct CircleNodeModel {
     var content:String?
     var snapshot:UIImage?
     
-    init(_ jsonData:JSON) {
+    init(jsonData:JSON) {
+        displayType = CircleNodeDisplayType(rawValue: jsonData["displayType"].stringValue) ?? CircleNodeDisplayType(rawValue: "VIEW")!
         top = jsonData["top"].floatValue
         left = jsonData["left"].floatValue
         width = jsonData["width"].floatValue
@@ -52,13 +60,6 @@ struct CircleNodeModel {
 }
 
 struct CircleInfoModel {
-    var viewInfo:CircleNodeModel?
-    var vcInfo:CircleNodeModel?
-    var cellInfo:CircleNodeModel?
-    init(_ jsonData:JSON) {
-        viewInfo = CircleNodeModel(jsonData["view"])
-        vcInfo = CircleNodeModel(jsonData["page"])
-        cellInfo = CircleNodeModel(jsonData["cell"])
-    }
+    var infoArray:[CircleNodeModel] = []
 }
  

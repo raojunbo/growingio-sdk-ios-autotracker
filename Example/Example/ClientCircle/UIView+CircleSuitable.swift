@@ -30,6 +30,11 @@ extension UIView {
     
     private func circleSuitableView(point:CGPoint,event:UIEvent?) -> UIView? {
         //判定能否接收事件
+        if type(of: self) == CircleSelectCoverView.self {
+            return nil
+        }
+        
+        //目前只有可点击的能被圈选
         if self.isUserInteractionEnabled == false || self.isHidden == true || self.alpha <= 0.01 {
             return nil
         }
@@ -46,6 +51,10 @@ extension UIView {
             //递归去寻找
             let fitView = childView.circleSuitableView(point: childP, event: event)
             if let fitView = fitView {
+                if checkInnerSystemView(fitView) {
+                    //系统内部的view被找到，就找其父视图，直到找到非系统的
+                    return findNoSystemView(fitView: fitView)
+                }
                 return fitView
             }
         }
@@ -53,13 +62,12 @@ extension UIView {
         return self
     }
     
-   class func checkParentHadCell(fitView: UIView) -> UIView? {
-        //结束条件
-        //空
-        //UITableViewCell
+    //通过view找到他所属的最近的cell
+    class func checkParentHadCell(fitView: UIView) -> UIView? {
+        //结束条件 1:空 2:UITableViewCell
         var curView:UIView? = fitView
         while let tmpCurView = curView {
-            if type(of: tmpCurView) == UITableViewCell.self {
+            if type(of: tmpCurView) == UITableViewCell.self  {
                 break
             }
             curView = tmpCurView.superview
@@ -67,18 +75,37 @@ extension UIView {
         return curView
     }
     
-    //    private func tableViewCellSystemView() -> Bool{
-    //        let fitViewStr = "\(type(of: self))"
-    //        switch fitViewStr {
-    //        case "UITableViewCellContentView" :
-    //            return true
-    //        case "UITableViewLabel":
-    //            return true
-    //        case "_UISystemBackgroundView":
-    //            return true
-    //        default:
-    //            return false
-    //        }
-    //    }
+    //寻找非系统view
+    private func findNoSystemView(fitView:UIView) -> UIView? {
+        var curView:UIView? = fitView
+        while let tmpCurView = curView {
+            if !checkInnerSystemView(tmpCurView)  {
+                break
+            }
+            curView = tmpCurView.superview
+        }
+        return curView
+    }
     
+    //检测是否是系统内部view
+     private func checkInnerSystemView(_ fitView:UIView) -> Bool{
+         let fitViewStr = "\(type(of: fitView))"
+         switch fitViewStr {
+         //cell
+         case "UITableViewCellContentView" :
+             return true
+         case "_UISystemBackgroundView":
+             return true
+         case "UITableViewLabel":
+             return true
+            
+         //cell footer,cell header
+         case "_UITableViewHeaderFooterContentView":
+             return true
+         case "_UITableViewHeaderFooterViewLabel":
+             return true
+         default:
+             return false
+         }
+     }
 }

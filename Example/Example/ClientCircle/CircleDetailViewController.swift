@@ -69,7 +69,6 @@ class CircleDetailCell:UITableViewCell {
     }
     
     func refreshView()  {
-       
         typeLabel.frame = CGRect(x: 0, y: 0, width: 250, height: 0)
         typeLabel.text = "页面"
         typeLabel.font = UIFont.boldSystemFont(ofSize: 18)
@@ -126,19 +125,13 @@ class CircleDetailViewController: UIViewController {
 
 extension CircleDetailViewController:UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return circleInfo?.infoArray.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
         if let circleCell = cell as? CircleDetailCell {
-            if indexPath.row == 0 {
-                circleCell.dataModel = circleInfo?.vcInfo
-            }else if indexPath.row == 1{
-                circleCell.dataModel = circleInfo?.viewInfo
-            }else if indexPath.row == 2 {
-                circleCell.dataModel = circleInfo?.cellInfo
-            }
+            circleCell.dataModel = circleInfo?.infoArray[indexPath.row]
         }
         return cell
     }

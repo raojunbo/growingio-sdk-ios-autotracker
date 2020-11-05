@@ -73,6 +73,11 @@ class CircleRootViewController: UIViewController {
         guard let tmpFitView = fitView else {
             return nil
         }
+        //选中信息组合
+        //
+        
+    
+        var circleInfoModel = CircleInfoModel()
         
         //获取view节点信息
         var viewNodeModel = nodeViewInfo(tmpFitView)
@@ -80,23 +85,31 @@ class CircleRootViewController: UIViewController {
         viewNodeModel?.snapshot = viewShot
         
         //获取cell节点信息
-        let cell = UIView.checkParentHadCell(fitView: tmpFitView)
         var cellNodeModel:CircleNodeModel?
-        if let tmpCell = cell  {
-            cellNodeModel = nodeViewInfo(tmpCell)
-            cellNodeModel?.snapshot =  tmpCell.growingNodeScreenShot(withScale: UIScreen.main.scale)
+        if type(of: tmpFitView) != UITableViewCell.self {
+            let cell = UIView.checkParentHadCell(fitView: tmpFitView)
+            if let tmpCell = cell  {
+                cellNodeModel = nodeViewInfo(tmpCell)
+                cellNodeModel?.snapshot =  tmpCell.growingNodeScreenShot(withScale: UIScreen.main.scale)
+            }
         }
-        
+
         //取vc节点信息
         var vcNodeModel = nodeVCInfo()
         let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
         let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
         vcNodeModel?.snapshot = vcShot
         
-        var circleInfoModel = CircleInfoModel(JSON())
-        circleInfoModel.viewInfo = viewNodeModel
-        circleInfoModel.vcInfo = vcNodeModel
-        circleInfoModel.cellInfo = cellNodeModel
+      
+        if let vcNodeModel = vcNodeModel {
+            circleInfoModel.infoArray.append(vcNodeModel)
+        }
+        if let cellNodeModel = cellNodeModel  {
+            circleInfoModel.infoArray.append(cellNodeModel)
+        }
+        if let viewNodeModel = viewNodeModel {
+            circleInfoModel.infoArray.append(viewNodeModel)
+        }
         return circleInfoModel
     }
     
@@ -107,7 +120,7 @@ class CircleRootViewController: UIViewController {
         guard let tmpviewInfoDict = viewInfoDict else {
             return nil
         }
-        return  CircleNodeModel(JSON(tmpviewInfoDict))
+        return  CircleNodeModel(jsonData:JSON(tmpviewInfoDict))
     }
     
     func nodeVCInfo() -> CircleNodeModel? {
@@ -124,7 +137,7 @@ class CircleRootViewController: UIViewController {
         guard let tmpPageDict = pageDict else {
             return nil
         }
-        return CircleNodeModel(JSON(tmpPageDict))
+        return CircleNodeModel(jsonData:JSON(tmpPageDict))
     }
     
     //页面信息的获取
