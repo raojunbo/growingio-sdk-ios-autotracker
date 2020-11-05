@@ -104,6 +104,13 @@ extension UIView {
              return true
          case "_UITableViewHeaderFooterViewLabel":
              return true
+            
+        //导航
+         case "_UIBarBackground":
+            return true
+         case "_UINavigationBarContentView":
+            return true
+            
          default:
              return false
          }
