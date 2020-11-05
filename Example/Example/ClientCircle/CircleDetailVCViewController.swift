@@ -20,24 +20,15 @@
 
 import UIKit
 
-class CircleDetailVCViewController: UIViewController {
 
+/// 页面保曝光，页面时长
+class CircleDetailVCViewController: UIViewController {
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         self.title = "定义整页"
-        // Do any additional setup after loading the view.
+        
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+

@@ -57,7 +57,7 @@ class CircleDetailCell:UITableViewCell {
         
         let screenWidth = UIScreen.main.bounds.width
         let bgViewWidth =  screenWidth - kLeftMargin * 2
-
+        
         bgView.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: screenWidth - kLeftMargin * 2, height: kDetailCellHeight - kTopMargin * 2)
         bgView.layer.cornerRadius = 4
         bgView.layer.masksToBounds = true
@@ -76,7 +76,7 @@ class CircleDetailCell:UITableViewCell {
         typeLabel.lineBreakMode = .byCharWrapping
         typeLabel.numberOfLines = 0
         typeLabel.frame = CGRect(x: kLeftMargin, y: kTopMargin, width: 250, height: typeLabel.requiredHeight)
-
+        
         classNameLabel.frame = CGRect(x: 0, y: 0 , width: 250, height: 0)
         classNameLabel.text = "类名"
         classNameLabel.textColor = UIColor.white
@@ -146,8 +146,11 @@ extension CircleDetailViewController:UITableViewDelegate,UITableViewDataSource {
         if indexPath.row == 0 {
             vc = CircleDetailVCViewController()
         } else {
-            vc = CircleDetailViewViewController()
+            let viewInfoVC = CircleDetailViewViewController()
+            viewInfoVC.nodeInfo = circleInfo?.infoArray[indexPath.row]
+            vc = viewInfoVC
         }
+        
         if let toVC = vc {
             self.navigationController?.pushViewController(toVC, animated: true)
         }

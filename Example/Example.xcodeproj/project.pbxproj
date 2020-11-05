@@ -118,6 +118,7 @@
 		34EF6B0D2551693400AF7589 /* CircleDetailViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF6B0C2551693400AF7589 /* CircleDetailViewViewController.swift */; };
 		34EF6B1F2551882A00AF7589 /* CircleInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF6B1E2551882A00AF7589 /* CircleInfoModel.swift */; };
 		34EF6BA925528A6300AF7589 /* UILabelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF6BA825528A6300AF7589 /* UILabelExtensions.swift */; };
+		34EF6C382553E84A00AF7589 /* UIView+MJLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EF6C362553E84900AF7589 /* UIView+MJLExtension.m */; };
 		42ADE26C250B292900CA7268 /* HybirdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42ADE26B250B292900CA7268 /* HybirdTests.m */; };
 		4916270F24E157BB00444AF2 /* GIOPresentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4916270E24E157BB00444AF2 /* GIOPresentViewController.m */; };
 		4916271224E157CF00444AF2 /* GIOPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4916271124E157CF00444AF2 /* GIOPagingViewController.m */; };
@@ -286,6 +287,8 @@
 		34EF6B0C2551693400AF7589 /* CircleDetailViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleDetailViewViewController.swift; sourceTree = "<group>"; };
 		34EF6B1E2551882A00AF7589 /* CircleInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleInfoModel.swift; sourceTree = "<group>"; };
 		34EF6BA825528A6300AF7589 /* UILabelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtensions.swift; sourceTree = "<group>"; };
+		34EF6C362553E84900AF7589 /* UIView+MJLExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJLExtension.m"; sourceTree = "<group>"; };
+		34EF6C372553E84900AF7589 /* UIView+MJLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJLExtension.h"; sourceTree = "<group>"; };
 		42ADE26B250B292900CA7268 /* HybirdTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HybirdTests.m; sourceTree = "<group>"; };
 		48BA0D37888FF209ED84CD0E /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4916270D24E157BB00444AF2 /* GIOPresentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GIOPresentViewController.h; sourceTree = "<group>"; };
@@ -580,6 +583,8 @@
 				34EF6B1E2551882A00AF7589 /* CircleInfoModel.swift */,
 				34EF6B062551692000AF7589 /* CircleDetailVCViewController.swift */,
 				34EF6B0C2551693400AF7589 /* CircleDetailViewViewController.swift */,
+				34EF6C372553E84900AF7589 /* UIView+MJLExtension.h */,
+				34EF6C362553E84900AF7589 /* UIView+MJLExtension.m */,
 				34ACCE75254AC10C001B9DDF /* Example-Bridging-Header.h */,
 			);
 			path = ClientCircle;
@@ -1021,6 +1026,7 @@
 				34EF6B1F2551882A00AF7589 /* CircleInfoModel.swift in Sources */,
 				344EEE6A25510DDA00B083FE /* CircleRootViewController.swift in Sources */,
 				0465314924DD4272002D254C /* FirstViewController.m in Sources */,
+				34EF6C382553E84A00AF7589 /* UIView+MJLExtension.m in Sources */,
 				0465316024DD4272002D254C /* GIOButtonViewController.m in Sources */,
 				34ACCE78254AC10D001B9DDF /* CircleWindow.swift in Sources */,
 				34ACCE79254AC10D001B9DDF /* ClientCircleTestRootViewController.swift in Sources */,

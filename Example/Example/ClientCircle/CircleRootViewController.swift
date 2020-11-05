@@ -98,6 +98,9 @@ class CircleRootViewController: UIViewController {
         let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
         vcNodeModel?.snapshot = vcShot
         
+        viewNodeModel?.belongToVC = vcNodeModel?.className
+        cellNodeModel?.belongToVC = vcNodeModel?.className
+        
       
         if let vcNodeModel = vcNodeModel {
             circleInfoModel.infoArray.append(vcNodeModel)

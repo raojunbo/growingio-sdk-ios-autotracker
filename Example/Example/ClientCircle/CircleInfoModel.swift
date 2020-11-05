@@ -29,6 +29,7 @@ enum CircleNodeDisplayType:String {
 
 struct CircleNodeModel {
     var displayType:CircleNodeDisplayType
+    var belongToVC:String?
     var top:Float?
     var left:Float?
     var width:Float?
@@ -41,6 +42,7 @@ struct CircleNodeModel {
     var nodeName:String?
     var content:String?
     var snapshot:UIImage?
+
     
     init(jsonData:JSON) {
         displayType = CircleNodeDisplayType(rawValue: jsonData["displayType"].stringValue) ?? CircleNodeDisplayType(rawValue: "VIEW")!
