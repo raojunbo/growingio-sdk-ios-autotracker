@@ -44,6 +44,14 @@ class CircleDetailViewViewController: UIViewController {
         super.viewDidLoad()
         self.title = "定义view"
         self.view.backgroundColor = UIColor.white
+//        let typ = type(of: self)
+
+//        print(String(describing: type(of: self)))
+//        print(String(describing: Self.self))
+//        Self,表示类型
+
+
+        
         layoutUI()
     }
     

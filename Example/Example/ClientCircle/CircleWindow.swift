@@ -14,7 +14,7 @@ class CircleWindow: UIWindow {
         self.windowLevel = UIWindow.Level(rawValue: alertValue + 100)
         self.backgroundColor = UIColor(red: 220/255.0, green: 50/255.0, blue: 35/255.0, alpha: 0.2)
         self.isHidden = false
-        self.rootViewController = CircleRootViewController()
+        self.rootViewController = CircleRootViewController2()
     }
     
     required init?(coder: NSCoder) {

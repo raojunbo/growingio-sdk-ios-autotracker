@@ -1,8 +1,8 @@
 //
-// CircleDetailVCViewController.swift
+// VisualNodeBinding.swift
 // Example
 //
-//  Created by rjb on 2020/11/3.
+//  Created by rjb on 2020/11/8.
 //  Copyright (C) 2017 Beijing Yishu Technology Co., Ltd.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,13 @@
 //  limitations under the License.
 
 
-import UIKit
+import Foundation
 
-
-/// 页面保曝光，页面时长
-class CircleDetailVCViewController: UIViewController {
-   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
-        self.title = "定义整页"
+/// 可视化统计的入口
+/// 1. 提前做好方法的交换
+class VisualStatistics: NSObject {
+    @objc static func addAutoTrackSwizzles() {
+        UIViewController.swizzleOnce()
+        UIView.swizzleOnce()
     }
 }
-

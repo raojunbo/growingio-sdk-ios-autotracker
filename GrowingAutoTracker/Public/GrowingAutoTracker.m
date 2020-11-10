@@ -52,7 +52,8 @@
 @implementation Growing (AutoTrackKit)
 
 + (void)growingTrackerConfigurationDidChanged:(GrowingConfiguration *)configuration {
-    [self addAutoTrackSwizzles];//添加自动追踪交换
+//    [self addAutoTrackSwizzles];//添加自动追踪交换
+   
 }
 
 + (void)addAutoTrackSwizzles {

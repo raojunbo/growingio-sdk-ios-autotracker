@@ -1,8 +1,8 @@
 //
-// CircleDetailVCViewController.swift
+// VisualVCNodeManager.swift
 // Example
 //
-//  Created by rjb on 2020/11/3.
+//  Created by rjb on 2020/11/10.
 //  Copyright (C) 2017 Beijing Yishu Technology Co., Ltd.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,15 @@
 //  limitations under the License.
 
 
-import UIKit
+import Foundation
 
-
-/// 页面保曝光，页面时长
-class CircleDetailVCViewController: UIViewController {
-   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
-        self.title = "定义整页"
+/// 主要是管理Node节点的生成
+class VisualVCNodeManager {
+    static func createVCNode(_ vc:UIViewController)  {
+        var node = vc.node
+        if node == nil {
+            node = VisualVCNode.init(carrier: vc)
+            vc.node = node
+        }
     }
 }
-

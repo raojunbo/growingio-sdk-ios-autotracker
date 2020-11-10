@@ -54,6 +54,7 @@ static NSString * const kGrowingNodeRootIgnore = @"IgnorePage";
         parent = node.growingNodeParent;
         //当时跟视图时
         if (parent) {
+            //是视图控制器
             if ([parent isKindOfClass:[UIViewController class]]) {
                 if ([[GrowingPageManager sharedInstance] isViewControllerIgnored:(UIViewController*)parent]) {
                     if (parent.growingNodeSubPath.length > 0) [viewPathArray addObject:parent.growingNodeSubPath];
@@ -67,6 +68,7 @@ static NSString * const kGrowingNodeRootIgnore = @"IgnorePage";
                     }
                 }
             }else {
+                //不是视图控制器
                 if (node.growingNodeSubPath.length > 0) [viewPathArray addObject:node.growingNodeSubPath];
             }
         }else {

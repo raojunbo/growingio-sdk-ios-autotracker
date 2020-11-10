@@ -94,7 +94,7 @@ extension UIView {
     
     //检测是否是系统UIView
     private func checkIsSystmeView(_ fitView:UIView) -> Bool {
-        let fitViewStr = "\(type(of: fitView))"
+        let fitViewStr = String(describing:type(of: fitView))
         switch fitViewStr {
         case "UISwitch":
             return true
@@ -105,7 +105,7 @@ extension UIView {
     
     //检测选中的是否是系统内部view（是系统内部，返回合适的父view）
      private func checkInnerSystemView(_ fitView:UIView) -> Bool{
-         let fitViewStr = "\(type(of: fitView))"
+         let fitViewStr = String(describing: type(of: fitView))
          switch fitViewStr {
          //UITableViewCell
          case "UITableViewCellContentView" :

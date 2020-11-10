@@ -87,7 +87,7 @@
         int method_index = 0;
         for (; method_index < mlist->method_count; method_index++) {
             if (mlist->method_list[method_index].method_name == origSel_) {
-                assert(!directOriginalMethod);
+                assert(!directOriginalMethod);··············                                    
                 directOriginalMethod = &mlist->method_list[method_index];
             }
             if (mlist->method_list[method_index].method_name == altSel_) {

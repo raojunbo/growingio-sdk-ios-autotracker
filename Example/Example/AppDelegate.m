@@ -33,6 +33,10 @@ static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
     self.configuation.impressionScale = 1.0;
     [Growing startWithConfiguration:self.configuation];
 
+    //主要是做方法的交换；
+    [VisualStatistics addAutoTrackSwizzles];
+    
+
     NSString *trackSdkVersion = [Growing getVersion];
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     NSLog(@"GIO SDK当前版本号：%@;\n 当前手机系统的版本号：%@", trackSdkVersion, systemVersion);

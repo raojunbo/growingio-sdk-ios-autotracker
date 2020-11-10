@@ -108,10 +108,27 @@
 		047BF3BC24F655A50028FE94 /* PageEventsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 047BF3B924F655A50028FE94 /* PageEventsTest.m */; };
 		04A6FAF224E662E9006C72F0 /* GIOChildsAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FAF124E662E9006C72F0 /* GIOChildsAddViewController.m */; };
 		04A6FAF524E67215006C72F0 /* GIOBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6FAF424E67215006C72F0 /* GIOBaseViewController.m */; };
+		343BE0E225555AE600C420DF /* VisualNodeProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343BE0E125555AE600C420DF /* VisualNodeProtocal.swift */; };
+		343BE0E825555C1F00C420DF /* VisualUIViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343BE0E725555C1F00C420DF /* VisualUIViewNode.swift */; };
+		343BE1A425568E8A00C420DF /* VisualUITableViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343BE1A325568E8A00C420DF /* VisualUITableViewNode.swift */; };
+		343BE1AA2556962600C420DF /* UIView+VisualNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343BE1A92556962600C420DF /* UIView+VisualNode.swift */; };
 		344EEE6A25510DDA00B083FE /* CircleRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344EEE6925510DDA00B083FE /* CircleRootViewController.swift */; };
 		344EEE7425510EC300B083FE /* CircleSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344EEE7325510EC300B083FE /* CircleSelectView.swift */; };
 		344EEE922551396E00B083FE /* CircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344EEE912551396E00B083FE /* CircleDetailViewController.swift */; };
 		344EEEF4255159E600B083FE /* UIView+CircleSuitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344EEEF3255159E600B083FE /* UIView+CircleSuitable.swift */; };
+		3479020E25597E3F00135DA5 /* Exchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479020D25597E3F00135DA5 /* Exchange.swift */; };
+		34790214255A354A00135DA5 /* VisualViewNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34790213255A354A00135DA5 /* VisualViewNodeManager.swift */; };
+		3479021E255A51EE00135DA5 /* VisualVCNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479021D255A51EE00135DA5 /* VisualVCNodeManager.swift */; };
+		3479022C255A5C1100135DA5 /* NSObject+VisualNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3479022B255A5C1100135DA5 /* NSObject+VisualNode.swift */; };
+		34A7839F2556B943002A5294 /* VisualUILabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A7839E2556B943002A5294 /* VisualUILabelNode.swift */; };
+		34A783A52556C600002A5294 /* VisualUIImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783A42556C600002A5294 /* VisualUIImageNode.swift */; };
+		34A783AB2556C677002A5294 /* VisualUIControlNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783AA2556C677002A5294 /* VisualUIControlNode.swift */; };
+		34A783B12556C759002A5294 /* VisualUIWindowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783B02556C759002A5294 /* VisualUIWindowNode.swift */; };
+		34A783B72556C915002A5294 /* VisualVCNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783B62556C915002A5294 /* VisualVCNode.swift */; };
+		34A783C12556CBC3002A5294 /* CircleRootViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783C02556CBC3002A5294 /* CircleRootViewController2.swift */; };
+		34A783CB2556CE50002A5294 /* VisualNodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783CA2556CE50002A5294 /* VisualNodeHelper.swift */; };
+		34A783D12557954F002A5294 /* UIViewController+VisualNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783D02557954F002A5294 /* UIViewController+VisualNode.swift */; };
+		34A783D72557B78A002A5294 /* VisualStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A783D62557B78A002A5294 /* VisualStatistics.swift */; };
 		34ACCE78254AC10D001B9DDF /* CircleWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACCE76254AC10D001B9DDF /* CircleWindow.swift */; };
 		34ACCE79254AC10D001B9DDF /* ClientCircleTestRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACCE77254AC10D001B9DDF /* ClientCircleTestRootViewController.swift */; };
 		34EF6B072551692000AF7589 /* CircleDetailVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF6B062551692000AF7589 /* CircleDetailVCViewController.swift */; };
@@ -276,10 +293,27 @@
 		04A6FAF324E67215006C72F0 /* GIOBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GIOBaseViewController.h; sourceTree = "<group>"; };
 		04A6FAF424E67215006C72F0 /* GIOBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GIOBaseViewController.m; sourceTree = "<group>"; };
 		11EA2ABB8F1029820A3234DB /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		343BE0E125555AE600C420DF /* VisualNodeProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualNodeProtocal.swift; sourceTree = "<group>"; };
+		343BE0E725555C1F00C420DF /* VisualUIViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUIViewNode.swift; sourceTree = "<group>"; };
+		343BE1A325568E8A00C420DF /* VisualUITableViewNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUITableViewNode.swift; sourceTree = "<group>"; };
+		343BE1A92556962600C420DF /* UIView+VisualNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+VisualNode.swift"; sourceTree = "<group>"; };
 		344EEE6925510DDA00B083FE /* CircleRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleRootViewController.swift; sourceTree = "<group>"; };
 		344EEE7325510EC300B083FE /* CircleSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSelectView.swift; sourceTree = "<group>"; };
 		344EEE912551396E00B083FE /* CircleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleDetailViewController.swift; sourceTree = "<group>"; };
 		344EEEF3255159E600B083FE /* UIView+CircleSuitable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+CircleSuitable.swift"; sourceTree = "<group>"; };
+		3479020D25597E3F00135DA5 /* Exchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchange.swift; sourceTree = "<group>"; };
+		34790213255A354A00135DA5 /* VisualViewNodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualViewNodeManager.swift; sourceTree = "<group>"; };
+		3479021D255A51EE00135DA5 /* VisualVCNodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualVCNodeManager.swift; sourceTree = "<group>"; };
+		3479022B255A5C1100135DA5 /* NSObject+VisualNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+VisualNode.swift"; sourceTree = "<group>"; };
+		34A7839E2556B943002A5294 /* VisualUILabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUILabelNode.swift; sourceTree = "<group>"; };
+		34A783A42556C600002A5294 /* VisualUIImageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUIImageNode.swift; sourceTree = "<group>"; };
+		34A783AA2556C677002A5294 /* VisualUIControlNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUIControlNode.swift; sourceTree = "<group>"; };
+		34A783B02556C759002A5294 /* VisualUIWindowNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualUIWindowNode.swift; sourceTree = "<group>"; };
+		34A783B62556C915002A5294 /* VisualVCNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualVCNode.swift; sourceTree = "<group>"; };
+		34A783C02556CBC3002A5294 /* CircleRootViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleRootViewController2.swift; sourceTree = "<group>"; };
+		34A783CA2556CE50002A5294 /* VisualNodeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualNodeHelper.swift; sourceTree = "<group>"; };
+		34A783D02557954F002A5294 /* UIViewController+VisualNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+VisualNode.swift"; sourceTree = "<group>"; };
+		34A783D62557B78A002A5294 /* VisualStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualStatistics.swift; sourceTree = "<group>"; };
 		34ACCE75254AC10C001B9DDF /* Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Bridging-Header.h"; sourceTree = "<group>"; };
 		34ACCE76254AC10D001B9DDF /* CircleWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleWindow.swift; sourceTree = "<group>"; };
 		34ACCE77254AC10D001B9DDF /* ClientCircleTestRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientCircleTestRootViewController.swift; sourceTree = "<group>"; };
@@ -578,6 +612,8 @@
 				344EEE7325510EC300B083FE /* CircleSelectView.swift */,
 				344EEEF3255159E600B083FE /* UIView+CircleSuitable.swift */,
 				344EEE6925510DDA00B083FE /* CircleRootViewController.swift */,
+				34A783C02556CBC3002A5294 /* CircleRootViewController2.swift */,
+				34EF6C3D2554026E00AF7589 /* VisualNode */,
 				344EEE912551396E00B083FE /* CircleDetailViewController.swift */,
 				34EF6BA825528A6300AF7589 /* UILabelExtensions.swift */,
 				34EF6B1E2551882A00AF7589 /* CircleInfoModel.swift */,
@@ -588,6 +624,29 @@
 				34ACCE75254AC10C001B9DDF /* Example-Bridging-Header.h */,
 			);
 			path = ClientCircle;
+			sourceTree = "<group>";
+		};
+		34EF6C3D2554026E00AF7589 /* VisualNode */ = {
+			isa = PBXGroup;
+			children = (
+				3479022B255A5C1100135DA5 /* NSObject+VisualNode.swift */,
+				343BE1A92556962600C420DF /* UIView+VisualNode.swift */,
+				34A783D02557954F002A5294 /* UIViewController+VisualNode.swift */,
+				3479020D25597E3F00135DA5 /* Exchange.swift */,
+				34790213255A354A00135DA5 /* VisualViewNodeManager.swift */,
+				3479021D255A51EE00135DA5 /* VisualVCNodeManager.swift */,
+				34A783D62557B78A002A5294 /* VisualStatistics.swift */,
+				34A783CA2556CE50002A5294 /* VisualNodeHelper.swift */,
+				343BE0E125555AE600C420DF /* VisualNodeProtocal.swift */,
+				343BE0E725555C1F00C420DF /* VisualUIViewNode.swift */,
+				343BE1A325568E8A00C420DF /* VisualUITableViewNode.swift */,
+				34A7839E2556B943002A5294 /* VisualUILabelNode.swift */,
+				34A783A42556C600002A5294 /* VisualUIImageNode.swift */,
+				34A783B02556C759002A5294 /* VisualUIWindowNode.swift */,
+				34A783AA2556C677002A5294 /* VisualUIControlNode.swift */,
+				34A783B62556C915002A5294 /* VisualVCNode.swift */,
+			);
+			path = VisualNode;
 			sourceTree = "<group>";
 		};
 		42ADE26A250B28BC00CA7268 /* OtherTests */ = {
@@ -1006,24 +1065,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				34EF6B072551692000AF7589 /* CircleDetailVCViewController.swift in Sources */,
+				34A783CB2556CE50002A5294 /* VisualNodeHelper.swift in Sources */,
+				343BE1A425568E8A00C420DF /* VisualUITableViewNode.swift in Sources */,
+				34A783B72556C915002A5294 /* VisualVCNode.swift in Sources */,
 				04A6FAF224E662E9006C72F0 /* GIOChildsAddViewController.m in Sources */,
 				0465314424DD4272002D254C /* MeasurementProtocolTableViewController.m in Sources */,
 				0465314024DD4272002D254C /* GrowingKeyValueCell.m in Sources */,
 				0465314D24DD4272002D254C /* AppDelegate.m in Sources */,
+				34A7839F2556B943002A5294 /* VisualUILabelNode.swift in Sources */,
 				344EEEF4255159E600B083FE /* UIView+CircleSuitable.swift in Sources */,
 				0465315024DD4272002D254C /* GIOCollectionViewController.m in Sources */,
 				0465315424DD4272002D254C /* GIOSimpleUIElemtsViewController.m in Sources */,
 				344EEE922551396E00B083FE /* CircleDetailViewController.swift in Sources */,
+				3479021E255A51EE00135DA5 /* VisualVCNodeManager.swift in Sources */,
 				0465315624DD4272002D254C /* GIOBannerAndTableViewController.m in Sources */,
 				34EF6B0D2551693400AF7589 /* CircleDetailViewViewController.swift in Sources */,
 				0465315524DD4272002D254C /* GIOHybridViewController.m in Sources */,
+				3479022C255A5C1100135DA5 /* NSObject+VisualNode.swift in Sources */,
 				0465315124DD4272002D254C /* GIOUICategoryViewController.m in Sources */,
+				343BE0E825555C1F00C420DF /* VisualUIViewNode.swift in Sources */,
 				0465314824DD4272002D254C /* GIOPageEventViewController.m in Sources */,
 				0465313E24DD4272002D254C /* GIOAttributesTrackViewController.m in Sources */,
 				0465314624DD4272002D254C /* GIOVisitEventViewController.m in Sources */,
+				3479020E25597E3F00135DA5 /* Exchange.swift in Sources */,
 				0465313924DD4272002D254C /* GIOConstants.m in Sources */,
+				34A783D12557954F002A5294 /* UIViewController+VisualNode.swift in Sources */,
 				0465313724DD4272002D254C /* GIODataProcessOperation.m in Sources */,
 				34EF6B1F2551882A00AF7589 /* CircleInfoModel.swift in Sources */,
+				34A783AB2556C677002A5294 /* VisualUIControlNode.swift in Sources */,
+				34A783C12556CBC3002A5294 /* CircleRootViewController2.swift in Sources */,
 				344EEE6A25510DDA00B083FE /* CircleRootViewController.swift in Sources */,
 				0465314924DD4272002D254C /* FirstViewController.m in Sources */,
 				34EF6C382553E84A00AF7589 /* UIView+MJLExtension.m in Sources */,
@@ -1034,10 +1104,14 @@
 				344EEE7425510EC300B083FE /* CircleSelectView.swift in Sources */,
 				0465315E24DD4272002D254C /* GIOListTableViewCell.m in Sources */,
 				0465315824DD4272002D254C /* GIOPageStructureViewController.m in Sources */,
+				343BE1AA2556962600C420DF /* UIView+VisualNode.swift in Sources */,
+				34790214255A354A00135DA5 /* VisualViewNodeManager.swift in Sources */,
+				34A783B12556C759002A5294 /* VisualUIWindowNode.swift in Sources */,
 				0465313D24DD4272002D254C /* GIOUserIdViewController.m in Sources */,
 				0465315B24DD4272002D254C /* GIOCollectionViewCell.m in Sources */,
 				0465314F24DD4272002D254C /* GIOTextFieldViewController.m in Sources */,
 				4916271224E157CF00444AF2 /* GIOPagingViewController.m in Sources */,
+				34A783D72557B78A002A5294 /* VisualStatistics.swift in Sources */,
 				0465313F24DD4272002D254C /* GIOInputChangeEventViewController.m in Sources */,
 				04A6FAF524E67215006C72F0 /* GIOBaseViewController.m in Sources */,
 				0465315A24DD4272002D254C /* GIOFoodTableViewCell.m in Sources */,
@@ -1045,6 +1119,7 @@
 				0465314724DD4272002D254C /* ContainerViewController.m in Sources */,
 				0465314E24DD4272002D254C /* GIOLabelAttributeViewController.m in Sources */,
 				0465315324DD4272002D254C /* GIOActionSheetViewController.m in Sources */,
+				343BE0E225555AE600C420DF /* VisualNodeProtocal.swift in Sources */,
 				0465314C24DD4272002D254C /* main.m in Sources */,
 				0465314A24DD4272002D254C /* SecondViewController.m in Sources */,
 				0465314224DD4272002D254C /* PageAttributesEventViewController.m in Sources */,
@@ -1052,6 +1127,7 @@
 				0465314324DD4272002D254C /* GIOClickEventViewController.m in Sources */,
 				0465313824DD4272002D254C /* MBProgressHUD+GrowingHelper.m in Sources */,
 				4916270F24E157BB00444AF2 /* GIOPresentViewController.m in Sources */,
+				34A783A52556C600002A5294 /* VisualUIImageNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

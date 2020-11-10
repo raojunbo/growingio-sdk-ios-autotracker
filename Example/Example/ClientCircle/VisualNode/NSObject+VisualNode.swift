@@ -1,8 +1,8 @@
 //
-// CircleDetailVCViewController.swift
+// NSObject+VisualNode.swift
 // Example
 //
-//  Created by rjb on 2020/11/3.
+//  Created by rjb on 2020/11/10.
 //  Copyright (C) 2017 Beijing Yishu Technology Co., Ltd.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,19 @@
 //  limitations under the License.
 
 
-import UIKit
+import Foundation
 
-
-/// 页面保曝光，页面时长
-class CircleDetailVCViewController: UIViewController {
-   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
-        self.title = "定义整页"
+extension NSObject {
+    /// node 关联的key
+    static var kVisualNode:Void?
+    
+    /// 给UIView绑定一个node
+    var node:VisualNodeProtocal? {
+        get {
+            return objc_getAssociatedObject(self, &UIView.kVisualNode) as? VisualNodeProtocal
+        }
+        set {
+            objc_setAssociatedObject(self, &UIView.kVisualNode, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
 }
-
