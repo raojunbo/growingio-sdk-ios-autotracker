@@ -1,8 +1,8 @@
 //
-// VisualNodeBinding.swift
+// VisualStatistics.swift
 // Example
 //
-//  Created by rjb on 2020/11/8.
+//  Created by rjb on 2020/11/12.
 //  Copyright (C) 2017 Beijing Yishu Technology Co., Ltd.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,3 @@
 
 
 import Foundation
-
-/// 可视化统计的入口
-/// 1. 提前做好方法的交换
-class VisualStatistics: NSObject {
-    @objc static func addAutoTrackSwizzles() {
-        UIViewController.swizzleOnce()
-        UIView.swizzleOnce()
-    }
-}

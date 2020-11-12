@@ -62,5 +62,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_adhp._tcp</string>
+	</array>
 </dict>
 </plist>

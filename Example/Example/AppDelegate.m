@@ -16,6 +16,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <GrowingAutoTracker.h>
 #import "Example-Swift.h" // 编译器将Swift的代码转换成Object-c的代码
+#import "Mixpanel.h"
 static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate>
@@ -34,12 +35,15 @@ static NSString *const kGrowingProjectId = @"growing.725d0731e0e2bd65";
     [Growing startWithConfiguration:self.configuation];
 
     //主要是做方法的交换；
-    [VisualStatistics addAutoTrackSwizzles];
-    
+    [VisualStatisticsCircle addAutoTrackSwizzles];
+    [MixpannelObjectC configure];
+//    [Mixpanel sharedInstanceWithToken:@"6ce733fde9dcf0c1b9ac97bb02fce61d"];
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    NSLog(@"%@",[mixpanel libVersion]);
 
-    NSString *trackSdkVersion = [Growing getVersion];
-    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-    NSLog(@"GIO SDK当前版本号：%@;\n 当前手机系统的版本号：%@", trackSdkVersion, systemVersion);
+//    NSString *trackSdkVersion = [Growing getVersion];
+//    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+//    NSLog(@"GIO SDK当前版本号：%@;\n 当前手机系统的版本号：%@", trackSdkVersion, systemVersion);
 
     [self registerRemoteNotification];
     

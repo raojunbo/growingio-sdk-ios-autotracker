@@ -18,6 +18,12 @@ target 'Example' do
   pod 'AlicloudPush', '~> 1.9.8'
   pod 'LookinServer', :configurations => ['Debug']
   pod 'SwiftyJSON'
+#  pod 'Mixpanel'
+  pod 'Mixpanel-swift'
+#  pod 'WoodPeckeriOS', :configurations => ['Debug']
+
+  # for macOS project
+  # pod 'WoodpeckerMacOS', :configurations => ['Debug']
 end
 
 target 'ExampleTests' do

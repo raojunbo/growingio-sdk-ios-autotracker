@@ -15,6 +15,9 @@ PODS:
   - KIF/Core (3.7.11)
   - LookinServer (1.0.0)
   - MBProgressHUD (1.2.0)
+  - Mixpanel-swift (2.7.7):
+    - Mixpanel-swift/Complete (= 2.7.7)
+  - Mixpanel-swift/Complete (2.7.7)
   - MJRefresh (3.5.0)
   - SDCycleScrollView (1.80):
     - SDWebImage (>= 5.0.0)
@@ -29,6 +32,7 @@ DEPENDENCIES:
   - KIF
   - LookinServer
   - MBProgressHUD
+  - Mixpanel-swift
   - MJRefresh
   - SDCycleScrollView (~> 1.75)
   - SwiftyJSON
@@ -42,6 +46,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - KIF
     - LookinServer
+    - Mixpanel-swift
     - MJRefresh
     - SDWebImage
     - SwiftyJSON
@@ -62,11 +67,12 @@ SPEC CHECKSUMS:
   KIF: 927c502455cd746771c57e9b3a5123c67c7fa0b5
   LookinServer: 0002891cd3cec5e082a910e897dfe71b4f06b89e
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  Mixpanel-swift: 3a8fb9ce791e9c64d556b9446aa470b469c6fa7d
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
   SDCycleScrollView: b3c9a5ed840c771c4938978174c7c9d9feefeb96
   SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: c679b4fc35876a65dc31875dbdacd13dc91f90f3
+PODFILE CHECKSUM: e3e23cdd3a767caf5b9ce15e21b37dbf46b5a4d5
 
 COCOAPODS: 1.9.3

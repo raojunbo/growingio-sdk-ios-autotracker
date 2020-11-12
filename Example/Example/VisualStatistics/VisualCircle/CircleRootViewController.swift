@@ -196,6 +196,7 @@ class CircleRootViewController: UIViewController {
             dict["index"] = String(keyIndex)
         }
         dict["xpath"] = xPath
+        print(xPath)
         
         let frame = aNode.growingNodeFrame()
         dict["left"] = frame.origin.x

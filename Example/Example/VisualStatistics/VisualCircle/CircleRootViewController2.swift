@@ -80,9 +80,9 @@ class CircleRootViewController2: UIViewController {
         var viewNodeModel = nodeViewInfo(tmpFitView)
         let viewShot = tmpFitView.visualScreenshot(UIScreen.main.scale)
         viewNodeModel?.snapshot = viewShot
-
         
-       //获取cell节点信息
+        
+        //获取cell节点信息
         var cellNodeModel:CircleNodeModel?
         let isCell = tmpFitView is  UITableViewCell || tmpFitView is  UICollectionViewCell
         if !isCell {
@@ -92,20 +92,20 @@ class CircleRootViewController2: UIViewController {
                 cellNodeModel?.snapshot =  tmpCell.visualScreenshot(UIScreen.main.scale)
             }
         }
-//
-//        //取vc节点信息
-//        var vcNodeModel = nodeVCInfo()
-//        let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
-//        let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
-//        vcNodeModel?.snapshot = vcShot
-//
-//        viewNodeModel?.belongToVC = vcNodeModel?.className
-//        cellNodeModel?.belongToVC = vcNodeModel?.className
-//
-//
-//        if let vcNodeModel = vcNodeModel {
-//            circleInfoModel.infoArray.append(vcNodeModel)
-//        }
+        //
+        //        //取vc节点信息
+        //        var vcNodeModel = nodeVCInfo()
+        //        let currentVC = GrowingPageManager.sharedInstance()?.currentViewController()
+        //        let vcShot = currentVC?.growingNodeScreenShot(withScale: UIScreen.main.scale)
+        //        vcNodeModel?.snapshot = vcShot
+        //
+        //        viewNodeModel?.belongToVC = vcNodeModel?.className
+        //        cellNodeModel?.belongToVC = vcNodeModel?.className
+        //
+        //
+        //        if let vcNodeModel = vcNodeModel {
+        //            circleInfoModel.infoArray.append(vcNodeModel)
+        //        }
         
         if let cellNodeModel = cellNodeModel  {
             circleInfoModel.infoArray.append(cellNodeModel)
@@ -140,31 +140,35 @@ class CircleRootViewController2: UIViewController {
         var dict = [String:Any]()
         
         //获取节点内容
-//        let content:String? = node.visualNodeContent()
-//        dict["content"] = content
+        //        let content:String? = node.visualNodeContent()
+        //        dict["content"] = content
         dict["className"] = node.visualNodeClassName
         dict["nodeName"] = node.visualNodeName
         
-//        var nodeType = "TEXT"
-//        if aNode.isKind(of: UITextField.self) || aNode.isKind(of: UISearchBar.self) || aNode.isKind(of: UITextView.self){
-//            nodeType = "INPUT"
-//        } else if aNode.isKind(of: UICollectionViewCell.self) || aNode.isKind(of: UITableViewCell.self){
-//            nodeType = "LIST"
-//        } else if aNode.growingNodeUserInteraction() {
-//            nodeType = "BUTTON"
-//        }
+        //        var nodeType = "TEXT"
+        //        if aNode.isKind(of: UITextField.self) || aNode.isKind(of: UISearchBar.self) || aNode.isKind(of: UITextView.self){
+        //            nodeType = "INPUT"
+        //        } else if aNode.isKind(of: UICollectionViewCell.self) || aNode.isKind(of: UITableViewCell.self){
+        //            nodeType = "LIST"
+        //        } else if aNode.growingNodeUserInteraction() {
+        //            nodeType = "BUTTON"
+        //        }
         //为node 元素添加层级关系
-//        if aNode.isKind(of: UIView.self) {
-            //            nodeZLevel = Float(aNode.growingNodeWindow()?.windowLevel.rawValue ?? 0)
-            //            zLevel = 0
-            //            self.getElementLevelInWindow(aNode:aNode, superView: aNode.growingNodeWindow())
-            //            dict["zLevel"] = self.zLevel
-//        }
+        //        if aNode.isKind(of: UIView.self) {
+        //            nodeZLevel = Float(aNode.growingNodeWindow()?.windowLevel.rawValue ?? 0)
+        //            zLevel = 0
+        //            self.getElementLevelInWindow(aNode:aNode, superView: aNode.growingNodeWindow())
+        //            dict["zLevel"] = self.zLevel
+        //        }
         
         if keyIndex >= 0 {
             dict["index"] = String(keyIndex)
         }
         dict["xpath"] = xPath
+        if let xpath = xPath {
+            print("\(xpath)")
+        }
+       
         
         let frame = node.visualNodeFrame
         dict["left"] = frame.origin.x
